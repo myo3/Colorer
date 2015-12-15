@@ -1,0 +1,535 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DD981ED31C206CE700511055 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD981ED21C206CE700511055 /* AppDelegate.swift */; };
+		DD981EDA1C206CE700511055 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD981ED91C206CE700511055 /* Assets.xcassets */; };
+		DD981EDD1C206CE700511055 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD981EDB1C206CE700511055 /* LaunchScreen.storyboard */; };
+		DD981EE81C206CE700511055 /* P3_ColorerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD981EE71C206CE700511055 /* P3_ColorerTests.swift */; };
+		DD981EF31C206CE700511055 /* P3_ColorerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD981EF21C206CE700511055 /* P3_ColorerUITests.swift */; };
+		DD981F021C206CFE00511055 /* ArcaMajora-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = DD981F011C206CFE00511055 /* ArcaMajora-Heavy.otf */; settings = {ASSET_TAGS = (); }; };
+		DD981F041C206D0600511055 /* Dense-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = DD981F031C206D0600511055 /* Dense-Regular.otf */; settings = {ASSET_TAGS = (); }; };
+		DD981F061C206D1100511055 /* Bavro-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = DD981F051C206D1100511055 /* Bavro-Regular.otf */; settings = {ASSET_TAGS = (); }; };
+		DD981F081C206D1900511055 /* Infinity.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD981F071C206D1900511055 /* Infinity.ttf */; settings = {ASSET_TAGS = (); }; };
+		DD981F201C206ECB00511055 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD981F1B1C206ECB00511055 /* Main.storyboard */; settings = {ASSET_TAGS = (); }; };
+		DD981F211C206ECB00511055 /* RandomBackgroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD981F1C1C206ECB00511055 /* RandomBackgroundViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		DD981F221C206ECB00511055 /* ShapeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD981F1D1C206ECB00511055 /* ShapeViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		DD981F231C206ECB00511055 /* TriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD981F1E1C206ECB00511055 /* TriangleView.swift */; settings = {ASSET_TAGS = (); }; };
+		DD981F241C206ECB00511055 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD981F1F1C206ECB00511055 /* ViewController.swift */; settings = {ASSET_TAGS = (); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DD981EE41C206CE700511055 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DD981EC71C206CE700511055 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DD981ECE1C206CE700511055;
+			remoteInfo = "P3 Colorer";
+		};
+		DD981EEF1C206CE700511055 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DD981EC71C206CE700511055 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DD981ECE1C206CE700511055;
+			remoteInfo = "P3 Colorer";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		DD981ECF1C206CE700511055 /* P3 Colorer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "P3 Colorer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD981ED21C206CE700511055 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DD981ED91C206CE700511055 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DD981EDC1C206CE700511055 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		DD981EDE1C206CE700511055 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DD981EE31C206CE700511055 /* P3 ColorerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "P3 ColorerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD981EE71C206CE700511055 /* P3_ColorerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = P3_ColorerTests.swift; sourceTree = "<group>"; };
+		DD981EE91C206CE700511055 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DD981EEE1C206CE700511055 /* P3 ColorerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "P3 ColorerUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD981EF21C206CE700511055 /* P3_ColorerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = P3_ColorerUITests.swift; sourceTree = "<group>"; };
+		DD981EF41C206CE700511055 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DD981F011C206CFE00511055 /* ArcaMajora-Heavy.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "ArcaMajora-Heavy.otf"; path = "../../../../Downloads/ArcaMajora-Heavy/ArcaMajora-Heavy.otf"; sourceTree = "<group>"; };
+		DD981F031C206D0600511055 /* Dense-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Dense-Regular.otf"; path = "../../../../Downloads/Dense-Regular.otf"; sourceTree = "<group>"; };
+		DD981F051C206D1100511055 /* Bavro-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Bavro-Regular.otf"; path = "../../../../Downloads/BAVRO/OTF/Bavro-Regular.otf"; sourceTree = "<group>"; };
+		DD981F071C206D1900511055 /* Infinity.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Infinity.ttf; path = ../../../../Downloads/infinity/Infinity.ttf; sourceTree = "<group>"; };
+		DD981F1B1C206ECB00511055 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		DD981F1C1C206ECB00511055 /* RandomBackgroundViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomBackgroundViewController.swift; sourceTree = "<group>"; };
+		DD981F1D1C206ECB00511055 /* ShapeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeViewController.swift; sourceTree = "<group>"; };
+		DD981F1E1C206ECB00511055 /* TriangleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriangleView.swift; sourceTree = "<group>"; };
+		DD981F1F1C206ECB00511055 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DD981ECC1C206CE700511055 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DD981EE01C206CE700511055 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DD981EEB1C206CE700511055 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DD981EC61C206CE700511055 = {
+			isa = PBXGroup;
+			children = (
+				DD981F001C206CF300511055 /* Resources */,
+				DD981ED11C206CE700511055 /* P3 Colorer */,
+				DD981EE61C206CE700511055 /* P3 ColorerTests */,
+				DD981EF11C206CE700511055 /* P3 ColorerUITests */,
+				DD981ED01C206CE700511055 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DD981ED01C206CE700511055 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DD981ECF1C206CE700511055 /* P3 Colorer.app */,
+				DD981EE31C206CE700511055 /* P3 ColorerTests.xctest */,
+				DD981EEE1C206CE700511055 /* P3 ColorerUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DD981ED11C206CE700511055 /* P3 Colorer */ = {
+			isa = PBXGroup;
+			children = (
+				DD981F1B1C206ECB00511055 /* Main.storyboard */,
+				DD981F1C1C206ECB00511055 /* RandomBackgroundViewController.swift */,
+				DD981F1D1C206ECB00511055 /* ShapeViewController.swift */,
+				DD981F1E1C206ECB00511055 /* TriangleView.swift */,
+				DD981F1F1C206ECB00511055 /* ViewController.swift */,
+				DD981ED21C206CE700511055 /* AppDelegate.swift */,
+				DD981ED91C206CE700511055 /* Assets.xcassets */,
+				DD981EDB1C206CE700511055 /* LaunchScreen.storyboard */,
+				DD981EDE1C206CE700511055 /* Info.plist */,
+			);
+			path = "P3 Colorer";
+			sourceTree = "<group>";
+		};
+		DD981EE61C206CE700511055 /* P3 ColorerTests */ = {
+			isa = PBXGroup;
+			children = (
+				DD981EE71C206CE700511055 /* P3_ColorerTests.swift */,
+				DD981EE91C206CE700511055 /* Info.plist */,
+			);
+			path = "P3 ColorerTests";
+			sourceTree = "<group>";
+		};
+		DD981EF11C206CE700511055 /* P3 ColorerUITests */ = {
+			isa = PBXGroup;
+			children = (
+				DD981EF21C206CE700511055 /* P3_ColorerUITests.swift */,
+				DD981EF41C206CE700511055 /* Info.plist */,
+			);
+			path = "P3 ColorerUITests";
+			sourceTree = "<group>";
+		};
+		DD981F001C206CF300511055 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				DD981F071C206D1900511055 /* Infinity.ttf */,
+				DD981F051C206D1100511055 /* Bavro-Regular.otf */,
+				DD981F031C206D0600511055 /* Dense-Regular.otf */,
+				DD981F011C206CFE00511055 /* ArcaMajora-Heavy.otf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DD981ECE1C206CE700511055 /* P3 Colorer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DD981EF71C206CE700511055 /* Build configuration list for PBXNativeTarget "P3 Colorer" */;
+			buildPhases = (
+				DD981ECB1C206CE700511055 /* Sources */,
+				DD981ECC1C206CE700511055 /* Frameworks */,
+				DD981ECD1C206CE700511055 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "P3 Colorer";
+			productName = "P3 Colorer";
+			productReference = DD981ECF1C206CE700511055 /* P3 Colorer.app */;
+			productType = "com.apple.product-type.application";
+		};
+		DD981EE21C206CE700511055 /* P3 ColorerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DD981EFA1C206CE700511055 /* Build configuration list for PBXNativeTarget "P3 ColorerTests" */;
+			buildPhases = (
+				DD981EDF1C206CE700511055 /* Sources */,
+				DD981EE01C206CE700511055 /* Frameworks */,
+				DD981EE11C206CE700511055 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DD981EE51C206CE700511055 /* PBXTargetDependency */,
+			);
+			name = "P3 ColorerTests";
+			productName = "P3 ColorerTests";
+			productReference = DD981EE31C206CE700511055 /* P3 ColorerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		DD981EED1C206CE700511055 /* P3 ColorerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DD981EFD1C206CE700511055 /* Build configuration list for PBXNativeTarget "P3 ColorerUITests" */;
+			buildPhases = (
+				DD981EEA1C206CE700511055 /* Sources */,
+				DD981EEB1C206CE700511055 /* Frameworks */,
+				DD981EEC1C206CE700511055 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DD981EF01C206CE700511055 /* PBXTargetDependency */,
+			);
+			name = "P3 ColorerUITests";
+			productName = "P3 ColorerUITests";
+			productReference = DD981EEE1C206CE700511055 /* P3 ColorerUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DD981EC71C206CE700511055 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = "Monica Ong";
+				TargetAttributes = {
+					DD981ECE1C206CE700511055 = {
+						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = D2FXV4LXGX;
+					};
+					DD981EE21C206CE700511055 = {
+						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = D2FXV4LXGX;
+						TestTargetID = DD981ECE1C206CE700511055;
+					};
+					DD981EED1C206CE700511055 = {
+						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = D2FXV4LXGX;
+						TestTargetID = DD981ECE1C206CE700511055;
+					};
+				};
+			};
+			buildConfigurationList = DD981ECA1C206CE700511055 /* Build configuration list for PBXProject "P3 Colorer" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = DD981EC61C206CE700511055;
+			productRefGroup = DD981ED01C206CE700511055 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DD981ECE1C206CE700511055 /* P3 Colorer */,
+				DD981EE21C206CE700511055 /* P3 ColorerTests */,
+				DD981EED1C206CE700511055 /* P3 ColorerUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DD981ECD1C206CE700511055 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD981F201C206ECB00511055 /* Main.storyboard in Resources */,
+				DD981EDD1C206CE700511055 /* LaunchScreen.storyboard in Resources */,
+				DD981F061C206D1100511055 /* Bavro-Regular.otf in Resources */,
+				DD981EDA1C206CE700511055 /* Assets.xcassets in Resources */,
+				DD981F041C206D0600511055 /* Dense-Regular.otf in Resources */,
+				DD981F081C206D1900511055 /* Infinity.ttf in Resources */,
+				DD981F021C206CFE00511055 /* ArcaMajora-Heavy.otf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DD981EE11C206CE700511055 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DD981EEC1C206CE700511055 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DD981ECB1C206CE700511055 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD981F241C206ECB00511055 /* ViewController.swift in Sources */,
+				DD981ED31C206CE700511055 /* AppDelegate.swift in Sources */,
+				DD981F221C206ECB00511055 /* ShapeViewController.swift in Sources */,
+				DD981F231C206ECB00511055 /* TriangleView.swift in Sources */,
+				DD981F211C206ECB00511055 /* RandomBackgroundViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DD981EDF1C206CE700511055 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD981EE81C206CE700511055 /* P3_ColorerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DD981EEA1C206CE700511055 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD981EF31C206CE700511055 /* P3_ColorerUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DD981EE51C206CE700511055 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DD981ECE1C206CE700511055 /* P3 Colorer */;
+			targetProxy = DD981EE41C206CE700511055 /* PBXContainerItemProxy */;
+		};
+		DD981EF01C206CE700511055 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DD981ECE1C206CE700511055 /* P3 Colorer */;
+			targetProxy = DD981EEF1C206CE700511055 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		DD981EDB1C206CE700511055 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DD981EDC1C206CE700511055 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DD981EF51C206CE700511055 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		DD981EF61C206CE700511055 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DD981EF81C206CE700511055 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "P3 Colorer/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Monica-Ong.P3-Colorer";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		DD981EF91C206CE700511055 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = "P3 Colorer/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Monica-Ong.P3-Colorer";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		DD981EFB1C206CE700511055 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "P3 ColorerTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Monica-Ong.P3-ColorerTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/P3 Colorer.app/P3 Colorer";
+			};
+			name = Debug;
+		};
+		DD981EFC1C206CE700511055 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "P3 ColorerTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Monica-Ong.P3-ColorerTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/P3 Colorer.app/P3 Colorer";
+			};
+			name = Release;
+		};
+		DD981EFE1C206CE700511055 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "P3 ColorerUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Monica-Ong.P3-ColorerUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "P3 Colorer";
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		DD981EFF1C206CE700511055 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "P3 ColorerUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "Monica-Ong.P3-ColorerUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "P3 Colorer";
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DD981ECA1C206CE700511055 /* Build configuration list for PBXProject "P3 Colorer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DD981EF51C206CE700511055 /* Debug */,
+				DD981EF61C206CE700511055 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DD981EF71C206CE700511055 /* Build configuration list for PBXNativeTarget "P3 Colorer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DD981EF81C206CE700511055 /* Debug */,
+				DD981EF91C206CE700511055 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		DD981EFA1C206CE700511055 /* Build configuration list for PBXNativeTarget "P3 ColorerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DD981EFB1C206CE700511055 /* Debug */,
+				DD981EFC1C206CE700511055 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		DD981EFD1C206CE700511055 /* Build configuration list for PBXNativeTarget "P3 ColorerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DD981EFE1C206CE700511055 /* Debug */,
+				DD981EFF1C206CE700511055 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DD981EC71C206CE700511055 /* Project object */;
+}

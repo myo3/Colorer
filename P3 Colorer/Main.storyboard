@@ -5,6 +5,14 @@
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="ArcaMajora-Heavy.otf">
+            <string>ArcaMajora-Heavy</string>
+            <string>ArcaMajora-Heavy</string>
+            <string>ArcaMajora-Heavy</string>
+            <string>ArcaMajora-Heavy</string>
+        </mutableArray>
+    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -18,20 +26,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ssr-vm-hND" userLabel="Random Color Arena">
-                                <rect key="frame" x="229" y="109" width="142" height="30"/>
-                                <animations/>
-                                <state key="normal" title="Random Color Arena">
-                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <segue destination="jV0-d3-iyZ" kind="show" identifier="randomColorSegue" id="kjd-Ke-CUz"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w2b-aL-Kcg">
-                                <rect key="frame" x="238" y="163" width="124" height="30"/>
+                                <rect key="frame" x="285" y="163" width="31" height="30"/>
                                 <animations/>
-                                <state key="normal" title="Red Square Arena">
+                                <fontDescription key="fontDescription" name="ArcaMajora-Heavy" family="Arca Majora" pointSize="15"/>
+                                <state key="normal" title="RED">
                                     <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -39,9 +38,10 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ufP-sk-AR0">
-                                <rect key="frame" x="251" y="271" width="99" height="30"/>
+                                <rect key="frame" x="261.5" y="271" width="77" height="30"/>
                                 <animations/>
-                                <state key="normal" title="Triangle Arena">
+                                <fontDescription key="fontDescription" name="ArcaMajora-Heavy" family="Arca Majora" pointSize="15"/>
+                                <state key="normal" title="TRIANGLE">
                                     <color key="titleColor" red="0.0" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -49,13 +49,25 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wqk-ZZ-YSB">
-                                <rect key="frame" x="237" y="217" width="127" height="30"/>
+                                <rect key="frame" x="280.5" y="217" width="40" height="30"/>
                                 <animations/>
-                                <state key="normal" title="Blue Square Arena">
+                                <fontDescription key="fontDescription" name="ArcaMajora-Heavy" family="Arca Majora" pointSize="15"/>
+                                <state key="normal" title="BLUE">
                                     <color key="titleColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <segue destination="Vi9-5L-yVi" kind="presentation" identifier="blueSegue" id="JCB-pN-HpI"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ssr-vm-hND" userLabel="Random Color Arena">
+                                <rect key="frame" x="264" y="109" width="72" height="30"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" name="ArcaMajora-Heavy" family="Arca Majora" pointSize="15"/>
+                                <state key="normal" title="RANDOM">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="jV0-d3-iyZ" kind="show" identifier="randomColorSegue" id="kjd-Ke-CUz"/>
                                 </connections>
                             </button>
                         </subviews>

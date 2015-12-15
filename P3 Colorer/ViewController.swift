@@ -20,6 +20,14 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewDidAppear(animated: Bool) {
+        let colorSlider = ColorSlider()
+        colorSlider.frame = CGRectMake(view.bounds.width/2 - 50, view.bounds.height/2, 100, 300)
+        colorSlider.previewEnabled = true
+        colorSlider.cornerRadius = 0
+        colorSlider.borderColor = UIColor.clearColor()
+        view.addSubview(colorSlider)
+    }
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "randomColorSegue"{
             if let shapeViewController = segue.destinationViewController as? ShapeViewController {

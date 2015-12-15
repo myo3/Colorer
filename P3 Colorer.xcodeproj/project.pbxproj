@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DD70CC9C1C20B53E00736426 /* ColorSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD70CC9B1C20B53E00736426 /* ColorSlider.swift */; settings = {ASSET_TAGS = (); }; };
 		DD981ED31C206CE700511055 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD981ED21C206CE700511055 /* AppDelegate.swift */; };
 		DD981EDA1C206CE700511055 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD981ED91C206CE700511055 /* Assets.xcassets */; };
 		DD981EDD1C206CE700511055 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD981EDB1C206CE700511055 /* LaunchScreen.storyboard */; };
@@ -41,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DD70CC9B1C20B53E00736426 /* ColorSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorSlider.swift; sourceTree = "<group>"; };
 		DD981ECF1C206CE700511055 /* P3 Colorer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "P3 Colorer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD981ED21C206CE700511055 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DD981ED91C206CE700511055 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -52,10 +54,10 @@
 		DD981EEE1C206CE700511055 /* P3 ColorerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "P3 ColorerUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD981EF21C206CE700511055 /* P3_ColorerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = P3_ColorerUITests.swift; sourceTree = "<group>"; };
 		DD981EF41C206CE700511055 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DD981F011C206CFE00511055 /* ArcaMajora-Heavy.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "ArcaMajora-Heavy.otf"; path = "../../../../Downloads/ArcaMajora-Heavy/ArcaMajora-Heavy.otf"; sourceTree = "<group>"; };
-		DD981F031C206D0600511055 /* Dense-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Dense-Regular.otf"; path = "../../../../Downloads/Dense-Regular.otf"; sourceTree = "<group>"; };
-		DD981F051C206D1100511055 /* Bavro-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Bavro-Regular.otf"; path = "../../../../Downloads/BAVRO/OTF/Bavro-Regular.otf"; sourceTree = "<group>"; };
-		DD981F071C206D1900511055 /* Infinity.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Infinity.ttf; path = ../../../../Downloads/infinity/Infinity.ttf; sourceTree = "<group>"; };
+		DD981F011C206CFE00511055 /* ArcaMajora-Heavy.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "ArcaMajora-Heavy.otf"; path = "Media/Font/ArcaMajora-Heavy/ArcaMajora-Heavy.otf"; sourceTree = "<group>"; };
+		DD981F031C206D0600511055 /* Dense-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Dense-Regular.otf"; path = "Media/Font/Dense/Dense-Regular.otf"; sourceTree = "<group>"; };
+		DD981F051C206D1100511055 /* Bavro-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Bavro-Regular.otf"; path = "Media/Font/Bavro/OTF/Bavro-Regular.otf"; sourceTree = "<group>"; };
+		DD981F071C206D1900511055 /* Infinity.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Infinity.ttf; path = Media/Font/Infinity/Infinity.ttf; sourceTree = "<group>"; };
 		DD981F1B1C206ECB00511055 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		DD981F1C1C206ECB00511055 /* RandomBackgroundViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomBackgroundViewController.swift; sourceTree = "<group>"; };
 		DD981F1D1C206ECB00511055 /* ShapeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeViewController.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				DD981ED91C206CE700511055 /* Assets.xcassets */,
 				DD981EDB1C206CE700511055 /* LaunchScreen.storyboard */,
 				DD981EDE1C206CE700511055 /* Info.plist */,
+				DD70CC9B1C20B53E00736426 /* ColorSlider.swift */,
 			);
 			path = "P3 Colorer";
 			sourceTree = "<group>";
@@ -295,6 +298,7 @@
 				DD981ED31C206CE700511055 /* AppDelegate.swift in Sources */,
 				DD981F221C206ECB00511055 /* ShapeViewController.swift in Sources */,
 				DD981F231C206ECB00511055 /* TriangleView.swift in Sources */,
+				DD70CC9C1C20B53E00736426 /* ColorSlider.swift in Sources */,
 				DD981F211C206ECB00511055 /* RandomBackgroundViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -512,6 +516,7 @@
 				DD981EF91C206CE700511055 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DD981EFA1C206CE700511055 /* Build configuration list for PBXNativeTarget "P3 ColorerTests" */ = {
 			isa = XCConfigurationList;
@@ -520,6 +525,7 @@
 				DD981EFC1C206CE700511055 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DD981EFD1C206CE700511055 /* Build configuration list for PBXNativeTarget "P3 ColorerUITests" */ = {
 			isa = XCConfigurationList;
@@ -528,6 +534,7 @@
 				DD981EFF1C206CE700511055 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DD70CC9C1C20B53E00736426 /* ColorSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD70CC9B1C20B53E00736426 /* ColorSlider.swift */; settings = {ASSET_TAGS = (); }; };
+		DD7FDFF51C20DB5200F0AEFD /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7FDFF41C20DB5200F0AEFD /* StartViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		DD981ED31C206CE700511055 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD981ED21C206CE700511055 /* AppDelegate.swift */; };
 		DD981EDA1C206CE700511055 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD981ED91C206CE700511055 /* Assets.xcassets */; };
 		DD981EDD1C206CE700511055 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD981EDB1C206CE700511055 /* LaunchScreen.storyboard */; };
@@ -43,6 +44,7 @@
 
 /* Begin PBXFileReference section */
 		DD70CC9B1C20B53E00736426 /* ColorSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorSlider.swift; sourceTree = "<group>"; };
+		DD7FDFF41C20DB5200F0AEFD /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		DD981ECF1C206CE700511055 /* P3 Colorer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "P3 Colorer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD981ED21C206CE700511055 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DD981ED91C206CE700511055 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				DD981F1B1C206ECB00511055 /* Main.storyboard */,
+				DD7FDFF41C20DB5200F0AEFD /* StartViewController.swift */,
 				DD981F1C1C206ECB00511055 /* RandomBackgroundViewController.swift */,
 				DD981F1D1C206ECB00511055 /* ShapeViewController.swift */,
 				DD981F1E1C206ECB00511055 /* TriangleView.swift */,
@@ -295,6 +298,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD981F241C206ECB00511055 /* ViewController.swift in Sources */,
+				DD7FDFF51C20DB5200F0AEFD /* StartViewController.swift in Sources */,
 				DD981ED31C206CE700511055 /* AppDelegate.swift in Sources */,
 				DD981F221C206ECB00511055 /* ShapeViewController.swift in Sources */,
 				DD981F231C206ECB00511055 /* TriangleView.swift in Sources */,

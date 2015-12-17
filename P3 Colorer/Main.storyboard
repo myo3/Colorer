@@ -11,6 +11,12 @@
             <string>ArcaMajora-Heavy</string>
             <string>ArcaMajora-Heavy</string>
             <string>ArcaMajora-Heavy</string>
+            <string>ArcaMajora-Heavy</string>
+            <string>ArcaMajora-Heavy</string>
+            <string>ArcaMajora-Heavy</string>
+            <string>ArcaMajora-Heavy</string>
+            <string>ArcaMajora-Heavy</string>
+            <string>ArcaMajora-Heavy</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -1336,6 +1342,121 @@
                     <view key="view" contentMode="scaleToFill" id="CyC-BY-CG4">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Tw-hj-Lyu">
+                                <rect key="frame" x="0.0" y="500" width="600" height="100"/>
+                                <subviews>
+                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="KSK-l4-mMb">
+                                        <rect key="frame" x="213" y="36" width="173" height="31"/>
+                                        <animations/>
+                                        <color key="minimumTrackTintColor" red="0.023529411764705882" green="0.17647058823529413" blue="0.4392156862745098" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="maximumTrackTintColor" red="0.88627450980392153" green="0.88627450980392153" blue="0.88627450980392153" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="thumbTintColor" red="0.023529411764705882" green="0.17647058823529413" blue="0.4392156862745098" alpha="1" colorSpace="calibratedRGB"/>
+                                    </slider>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SQUARE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="stj-aM-ViP">
+                                        <rect key="frame" x="213" y="8" width="173" height="21"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" name="ArcaMajora-Heavy" family="Arca Majora" pointSize="17"/>
+                                        <color key="textColor" red="0.023529411760000001" green="0.1764705882" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="2ax-ps-QKA">
+                                        <rect key="frame" x="20" y="37" width="173" height="31"/>
+                                        <animations/>
+                                        <color key="minimumTrackTintColor" red="0.023529411760000001" green="0.1764705882" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="maximumTrackTintColor" red="0.8862745098" green="0.8862745098" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="thumbTintColor" red="0.023529411760000001" green="0.1764705882" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    </slider>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Height" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3kT-xu-y34">
+                                        <rect key="frame" x="25" y="9" width="173" height="21"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" name="ArcaMajora-Heavy" family="Arca Majora" pointSize="17"/>
+                                        <color key="textColor" red="0.023529411760000001" green="0.1764705882" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="100" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qi9-xe-Dgg">
+                                        <rect key="frame" x="25" y="71" width="173" height="21"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" name="ArcaMajora-Heavy" family="Arca Majora" pointSize="17"/>
+                                        <color key="textColor" red="0.023529411760000001" green="0.1764705882" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="oK9-IR-UTZ">
+                                        <rect key="frame" x="406" y="37" width="173" height="31"/>
+                                        <animations/>
+                                        <color key="minimumTrackTintColor" red="0.023529411760000001" green="0.1764705882" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="maximumTrackTintColor" red="0.8862745098" green="0.8862745098" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="thumbTintColor" red="0.023529411760000001" green="0.1764705882" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    </slider>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="WIDTH" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NQd-eI-w7I">
+                                        <rect key="frame" x="406" y="8" width="173" height="21"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" name="ArcaMajora-Heavy" family="Arca Majora" pointSize="17"/>
+                                        <color key="textColor" red="0.023529411760000001" green="0.1764705882" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="100" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xjY-sS-9Hd">
+                                        <rect key="frame" x="406" y="71" width="173" height="21"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" name="ArcaMajora-Heavy" family="Arca Majora" pointSize="17"/>
+                                        <color key="textColor" red="0.023529411760000001" green="0.1764705882" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="100" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B6a-ko-hVN">
+                                        <rect key="frame" x="213" y="71" width="173" height="21"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" name="ArcaMajora-Heavy" family="Arca Majora" pointSize="17"/>
+                                        <color key="textColor" red="0.023529411764705882" green="0.17647058823529413" blue="0.4392156862745098" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <animations/>
+                                <color key="backgroundColor" red="0.40784314274787903" green="0.76470589637756348" blue="0.72156864404678345" alpha="0.62167245370370372" colorSpace="calibratedRGB"/>
+                            </view>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ntg-lN-3nK">
+                                <rect key="frame" x="0.0" y="456" width="600" height="44"/>
+                                <animations/>
+                                <items>
+                                    <barButtonItem image="blackBack" id="ptA-Em-8wh">
+                                        <color key="tintColor" red="0.023529411764705882" green="0.17647058823529413" blue="0.4392156862745098" alpha="1" colorSpace="calibratedRGB"/>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="N6v-Fd-1eb"/>
+                                    <barButtonItem image="greyDraw" id="yv0-I8-cyC">
+                                        <color key="tintColor" red="0.023529411760000001" green="0.1764705882" blue="0.43921568630000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="WiD-IT-3ow"/>
+                                    <barButtonItem image="greyErase" id="jnl-zR-b9C">
+                                        <color key="tintColor" red="0.023529411764705882" green="0.17647058823529413" blue="0.4392156862745098" alpha="1" colorSpace="calibratedRGB"/>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="Bwh-2O-S4l"/>
+                                    <barButtonItem image="greyColor" id="tDi-mD-q5z">
+                                        <color key="tintColor" red="0.023529411764705882" green="0.17647058823529413" blue="0.4392156862745098" alpha="1" colorSpace="calibratedRGB"/>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="NVD-Ri-qYh"/>
+                                    <barButtonItem image="greyResize" id="Vod-sx-pTs">
+                                        <color key="tintColor" red="0.023529411764705882" green="0.17647058823529413" blue="0.4392156862745098" alpha="1" colorSpace="calibratedRGB"/>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="3CZ-OF-hU2"/>
+                                    <barButtonItem image="greyView" id="J3K-8l-KdD">
+                                        <color key="tintColor" red="0.023529411764705882" green="0.17647058823529413" blue="0.4392156862745098" alpha="1" colorSpace="calibratedRGB"/>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="4GQ-Zs-cNc"/>
+                                    <barButtonItem image="greyDelete" id="l13-S9-M37">
+                                        <color key="tintColor" red="0.023529411764705882" green="0.17647058823529413" blue="0.4392156862745098" alpha="1" colorSpace="calibratedRGB"/>
+                                    </barButtonItem>
+                                </items>
+                                <color key="barTintColor" red="0.40784314274787903" green="0.76470589637756348" blue="0.72156864404678345" alpha="1" colorSpace="calibratedRGB"/>
+                            </toolbar>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bUg-37-t5I">
+                                <rect key="frame" x="110" y="85" width="240" height="128"/>
+                                <animations/>
+                            </imageView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a6e-r2-6C4">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="455"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -1343,7 +1464,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wMK-8E-3KT" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1536" y="-423"/>
+            <point key="canvasLocation" x="1537" y="-400"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="aR5-g5-79s">
@@ -1362,7 +1483,34 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1e9-Z9-KPP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="770" y="-423"/>
+            <point key="canvasLocation" x="769" y="-400"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="3jp-s5-zi8">
+            <objects>
+                <viewController id="CsS-da-JAC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="w4r-Uf-TcM"/>
+                        <viewControllerLayoutGuide type="bottom" id="D4O-ue-ilV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="H4W-4c-tCN">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fCl-pI-5i1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
         </scene>
     </scenes>
+    <resources>
+        <image name="blackBack" width="32" height="32"/>
+        <image name="greyColor" width="32" height="32"/>
+        <image name="greyDelete" width="32" height="32"/>
+        <image name="greyDraw" width="32" height="32"/>
+        <image name="greyErase" width="32" height="32"/>
+        <image name="greyResize" width="32" height="32"/>
+        <image name="greyView" width="32" height="32"/>
+    </resources>
 </document>

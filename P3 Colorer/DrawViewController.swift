@@ -14,6 +14,7 @@ class DrawViewController: UIViewController {
     var eraseBarButton = UIBarButtonItem()
     var viewBarButton = UIBarButtonItem()
     
+    var canvas: UIView = UIView()
     var shape: String?
     var shapeColor: UIColor?
     var height: Int = 60
@@ -55,6 +56,11 @@ class DrawViewController: UIViewController {
         toolbar.barTintColor = UIColor(patternImage: UIImage(named: "\(selected!)Toolbar")!)
         toolbar.setItems(toolbarItems, animated: true)
         self.view.addSubview(toolbar)
+        
+        //set up canvas
+        canvas = UIView(frame: CGRectMake(0, 0, view.bounds.width, view.bounds.height-toolbar.bounds.height))
+        canvas.backgroundColor = UIColor.whiteColor()
+        self.view.insertSubview(canvas, belowSubview: toolbar)
     }
     
     override func didReceiveMemoryWarning() {
@@ -86,7 +92,7 @@ class DrawViewController: UIViewController {
             //set shape color
             shapeView.backgroundColor = shapeColor
             //add shape to view
-            view.addSubview(shapeView)
+            canvas.addSubview(shapeView)
             //add shape to rectangles array
             rectangles.insert(shapeView)
         }

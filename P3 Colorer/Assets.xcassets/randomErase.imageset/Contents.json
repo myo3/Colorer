@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "randomErase.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "randomErase.png",
       "scale" : "2x"
     },
     {

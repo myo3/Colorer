@@ -77,20 +77,24 @@ class StartViewController: UIViewController {
         switch button.tag{
         case 1: //blue rectangle
             shapeVC.selected = "blue"
-            shapeVC.shape = "Rectangle"
-            shapeVC.color = UIColor(red: 0.33, green: 0.89, blue: 0.96, alpha: 1)
+            shapeVC.shape = "rectangle"
+            shapeVC.barButtonColor = UIColor(red:0.03, green:0.25, blue:0.51, alpha:1.0)
+            shapeVC.shapeColor = UIColor(red:0.17, green:0.55, blue:0.75, alpha:1.0)
         case 2: //triangle
             shapeVC.selected = "triangle"
-            shapeVC.shape = "Triangle"
-            shapeVC.color = UIColor(red: 0.08, green: 0.61, blue: 0.08, alpha: 1.0)
+            shapeVC.shape = "triangle"
+            shapeVC.barButtonColor = UIColor(red:0.00, green:0.27, blue:0.16, alpha:1.0)
+            shapeVC.shapeColor = UIColor(red:0.14, green:0.52, blue:0.26, alpha:1.0)
         case 3: //red rectangle
             shapeVC.selected = "red"
-            shapeVC.shape = "Rectangle"
-            shapeVC.color = UIColor(red: 0.82, green: 0.05, blue: 0.05, alpha: 1.0)
-        default://blue rectangle
+            shapeVC.shape = "rectangle"
+            shapeVC.barButtonColor = UIColor(red:0.50, green:0.00, blue:0.15, alpha:1.0)
+            shapeVC.shapeColor = UIColor(red:0.74, green:0.00, blue:0.15, alpha:1.0)
+        default://default is blue rectangle
             shapeVC.selected = "blue"
-            shapeVC.shape = "Rectangle"
-            shapeVC.color = UIColor(red: 0.33, green: 0.89, blue: 0.96, alpha: 1)
+            shapeVC.shape = "rectangle"
+            shapeVC.barButtonColor = UIColor(red:0.03, green:0.25, blue:0.51, alpha:1.0)
+            shapeVC.shapeColor = UIColor(red:0.17, green:0.55, blue:0.75, alpha:1.0)
         }
         shapeVC.view.backgroundColor = UIColor.whiteColor()
         

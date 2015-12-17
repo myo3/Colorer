@@ -10,9 +10,6 @@ import UIKit
 
 class DrawViewController: UIViewController {
     var selected: String?
-    var barButtonColor: UIColor?
-    var eraseBarButton = UIBarButtonItem()
-    var viewBarButton = UIBarButtonItem()
     
     var canvas: UIView = UIView()
     var shape: String?
@@ -22,8 +19,16 @@ class DrawViewController: UIViewController {
     var rectangles: Set<UIView> = Set<UIView>()
     var shapeView: UIView = UIView()
     
+    var toolbar: UIToolbar = UIToolbar()
+    var barButtonColor: UIColor?
+    var eraseBarButton = UIBarButtonItem()
+    var viewBarButton = UIBarButtonItem()
+    
     var eraseMode: Bool = false
     var visible: Bool = true
+    var sizeMode: Bool = false
+    
+    var sizeToolbar: UIView = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,18 +54,24 @@ class DrawViewController: UIViewController {
         
         //set up toolbar
         let toolbarItems = [backBarButton, flexibleSpace, drawBarButton, flexibleSpace, eraseBarButton, flexibleSpace, colorBarButton, flexibleSpace, resizeBarButton, flexibleSpace, viewBarButton, flexibleSpace, deleteBarButton]
-        let toolbar = UIToolbar()
         toolbar.sizeToFit()
         toolbar.frame = CGRectMake(0, view.bounds.height-toolbar.bounds.height, toolbar.bounds.width, toolbar.bounds.height)
         toolbar.sizeToFit()
         toolbar.barTintColor = UIColor(patternImage: UIImage(named: "\(selected!)Toolbar")!)
+        //toolbar.layer.contents = UIImage(named: "\(selected!)Toolbar")!.CGImage //soft gradient color toolbar
+        toolbar.clipsToBounds = true //get rid of top line
         toolbar.setItems(toolbarItems, animated: true)
         self.view.addSubview(toolbar)
         
         //set up canvas
         canvas = UIView(frame: CGRectMake(0, 0, view.bounds.width, view.bounds.height-toolbar.bounds.height))
-        canvas.backgroundColor = UIColor.whiteColor()
         self.view.insertSubview(canvas, belowSubview: toolbar)
+        
+        //set up size toolbar
+        sizeToolbar = UIView(frame: CGRectMake(0, view.bounds.height, view.bounds.width, view.bounds.height/6))
+        sizeToolbar.layer.contents = UIImage(named: "\(selected!)SizeToolbar")!.CGImage
+        //sizeToolbar.backgroundColor = UIColor(patternImage: UIImage(named: "\(selected!)SizeToolbar")!) //looks literally the same w/ this
+        self.view.addSubview(sizeToolbar)
     }
     
     override func didReceiveMemoryWarning() {
@@ -76,7 +87,7 @@ class DrawViewController: UIViewController {
                     touch.view?.removeFromSuperview()
                 }
             }
-        } else if !eraseMode && visible{ //eraseMode off
+        } else if !eraseMode && visible{ //eraseMode off, visbility on,
             let location = touches.first!.locationInView(view)
             //create shape
             if shape == "triangle"{
@@ -85,16 +96,18 @@ class DrawViewController: UIViewController {
             }
             else if shape == "rectangle"{
                 shapeView = UIView(frame: CGRect(x: 0, y: 0, width: width, height: height))
-                shapeView.layer.cornerRadius = 10
+                shapeView.layer.cornerRadius = 10 //CGFloat(width)/2.0 //circle
             }
             //place shape where user touched
             shapeView.center = location
             //set shape color
             shapeView.backgroundColor = shapeColor
             //add shape to view
-            canvas.addSubview(shapeView)
-            //add shape to rectangles array
-            rectangles.insert(shapeView)
+            if !CGRectIntersectsRect(shapeView.frame, sizeToolbar.frame){
+                canvas.addSubview(shapeView)
+                //add shape to rectangles array
+                rectangles.insert(shapeView)
+            }
         }
     }
     
@@ -116,7 +129,19 @@ class DrawViewController: UIViewController {
     }
     
     func resize(sender: UIBarButtonItem){
+        sizeMode = !sizeMode
         
+        if sizeMode{
+            UIView.animateWithDuration(1.0, animations: {
+                self.sizeToolbar.center.y = self.view.bounds.height - self.sizeToolbar.bounds.height/2
+                self.toolbar.center.y = self.sizeToolbar.center.y - self.sizeToolbar.bounds.height/2 - self.toolbar.bounds.height/2
+            })
+        } else{
+            UIView.animateWithDuration(1.0, animations: {
+                self.sizeToolbar.center.y = self.view.bounds.height + self.sizeToolbar.bounds.height/2
+                self.toolbar.center.y = self.view.bounds.height - self.toolbar.bounds.height/2
+            })
+        }
     }
     
     func view(sender: UIBarButtonItem){

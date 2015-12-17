@@ -12,8 +12,49 @@ class StartViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        //create Random button
+        let randomButton = UIButton()
+        randomButton.frame = CGRectMake(0, 0, view.bounds.width, view.bounds.height/4)
+        randomButton.setTitle("RANDOM", forState: .Normal)
+        randomButton.setTitleColor(UIColor(red:0.21, green:0.22, blue:0.22, alpha:1.0), forState: .Normal)
+        randomButton.titleLabel?.font = UIFont(name: "ArcaMajora-Heavy", size: 50)
+        randomButton.setBackgroundImage(UIImage(named: "random"), forState: .Normal)
+        randomButton.addTarget(self, action: "randomButtonPressed:", forControlEvents: .TouchUpInside)
+        self.view.addSubview(randomButton)
+        
+        //create Blue button
+        let blueButton = UIButton()
+        blueButton.tag = 1
+        blueButton.frame = CGRectMake(0, view.bounds.height/4, view.bounds.width, view.bounds.height/4)
+        blueButton.setTitle("BLUE", forState: .Normal)
+        blueButton.setTitleColor(UIColor(red:0.91, green:0.91, blue:0.91, alpha:1.0), forState: .Normal)
+        blueButton.titleLabel?.font = UIFont(name: "ArcaMajora-Heavy", size: 50)
+        blueButton.setBackgroundImage(UIImage(named: "blue"), forState: .Normal)
+        blueButton.addTarget(self, action: "shapeButtonPressed:", forControlEvents: .TouchUpInside)
+        self.view.addSubview(blueButton)
+        
+        //create Triangle button
+        let triangleButton = UIButton()
+        triangleButton.tag = 2
+        triangleButton.frame = CGRectMake(0, view.bounds.height/2, view.bounds.width, view.bounds.height/4)
+        triangleButton.setTitle("TRIANGLE", forState: .Normal)
+        triangleButton.setTitleColor(UIColor(red:0.91, green:0.91, blue:0.91, alpha:1.0), forState: .Normal)
+        triangleButton.titleLabel?.font = UIFont(name: "ArcaMajora-Heavy", size: 50)
+        triangleButton.setBackgroundImage(UIImage(named: "triangle"), forState: .Normal)
+        triangleButton.addTarget(self, action: "shapeButtonPressed:", forControlEvents: .TouchUpInside)
+        self.view.addSubview(triangleButton)
+        
+        //create Red button
+        let redButton = UIButton()
+        redButton.tag = 3
+        redButton.frame = CGRectMake(0, view.bounds.height*3/4, view.bounds.width, view.bounds.height/4)
+        redButton.setTitle("RED", forState: .Normal)
+        redButton.setTitleColor(UIColor(red:0.91, green:0.91, blue:0.91, alpha:1.0), forState: .Normal)
+        redButton.titleLabel?.font = UIFont(name: "ArcaMajora-Heavy", size: 50)
+        redButton.setBackgroundImage(UIImage(named: "red"), forState: .Normal)
+        redButton.addTarget(self, action: "shapeButtonPressed:", forControlEvents: .TouchUpInside)
+        self.view.addSubview(redButton)
     }
 
     override func didReceiveMemoryWarning() {
@@ -22,63 +63,41 @@ class StartViewController: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
-        //create Random button
-        let randomButton = UIButton()
-        randomButton.frame = CGRectMake(0, 0, view.bounds.width, view.bounds.height/4)
-        randomButton.setTitle("RANDOM", forState: .Normal)
-        randomButton.setTitleColor(UIColor(red:0.21, green:0.22, blue:0.22, alpha:1.0), forState: .Normal)
-        randomButton.titleLabel?.font = UIFont(name: "ArcaMajora-Heavy", size: 50)
-        randomButton.setBackgroundImage(UIImage(named: "Random"), forState: .Normal)
-        randomButton.addTarget(self, action: "randomButtonPressed:", forControlEvents: .TouchUpInside)
-        self.view.addSubview(randomButton)
-        
-        //create Blue button
-        let blueButton = UIButton()
-        blueButton.frame = CGRectMake(0, view.bounds.height/4, view.bounds.width, view.bounds.height/4)
-        blueButton.setTitle("BLUE", forState: .Normal)
-        blueButton.setTitleColor(UIColor(red:0.91, green:0.91, blue:0.91, alpha:1.0), forState: .Normal)
-        blueButton.titleLabel?.font = UIFont(name: "ArcaMajora-Heavy", size: 50)
-        blueButton.setBackgroundImage(UIImage(named: "Blue"), forState: .Normal)
-        blueButton.addTarget(self, action: "blueButtonPressed:", forControlEvents: .TouchUpInside)
-        self.view.addSubview(blueButton)
-        
-        //create Triangle button
-        let triangleButton = UIButton()
-        triangleButton.frame = CGRectMake(0, view.bounds.height/2, view.bounds.width, view.bounds.height/4)
-        triangleButton.setTitle("TRIANGLE", forState: .Normal)
-        triangleButton.setTitleColor(UIColor(red:0.91, green:0.91, blue:0.91, alpha:1.0), forState: .Normal)
-        triangleButton.titleLabel?.font = UIFont(name: "ArcaMajora-Heavy", size: 50)
-        triangleButton.setBackgroundImage(UIImage(named: "Triangle"), forState: .Normal)
-        triangleButton.addTarget(self, action: "triangleButtonPressed:", forControlEvents: .TouchUpInside)
-        self.view.addSubview(triangleButton)
-        
-        //create Red button
-        let redButton = UIButton()
-        redButton.frame = CGRectMake(0, view.bounds.height*3/4, view.bounds.width, view.bounds.height/4)
-        redButton.setTitle("RED", forState: .Normal)
-        redButton.setTitleColor(UIColor(red:0.91, green:0.91, blue:0.91, alpha:1.0), forState: .Normal)
-        redButton.titleLabel?.font = UIFont(name: "ArcaMajora-Heavy", size: 50)
-        redButton.setBackgroundImage(UIImage(named: "Red"), forState: .Normal)
-        redButton.addTarget(self, action: "redButtonPressed:", forControlEvents: .TouchUpInside)
-        self.view.addSubview(redButton)
-        
     }
     
     func randomButtonPressed(sender: UIButton!){
-    
+        let randomVC = RandomBackgroundViewController()
+        self.navigationController?.pushViewController(randomVC, animated: true)
+        //self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
-    func blueButtonPressed(sender: UIButton!){
+    func shapeButtonPressed(sender: UIButton!){
+        let shapeVC = DrawViewController()
+        let button = sender as UIButton
+        switch button.tag{
+        case 1: //blue rectangle
+            shapeVC.selected = "blue"
+            shapeVC.shape = "Rectangle"
+            shapeVC.color = UIColor(red: 0.33, green: 0.89, blue: 0.96, alpha: 1)
+        case 2: //triangle
+            shapeVC.selected = "triangle"
+            shapeVC.shape = "Triangle"
+            shapeVC.color = UIColor(red: 0.08, green: 0.61, blue: 0.08, alpha: 1.0)
+        case 3: //red rectangle
+            shapeVC.selected = "red"
+            shapeVC.shape = "Rectangle"
+            shapeVC.color = UIColor(red: 0.82, green: 0.05, blue: 0.05, alpha: 1.0)
+        default://blue rectangle
+            shapeVC.selected = "blue"
+            shapeVC.shape = "Rectangle"
+            shapeVC.color = UIColor(red: 0.33, green: 0.89, blue: 0.96, alpha: 1)
+        }
+        shapeVC.view.backgroundColor = UIColor.whiteColor()
+        
+        self.navigationController?.pushViewController(shapeVC, animated: true)
         
     }
     
-    func triangleButtonPressed(sender: UIButton!){
-        
-    }
-    
-    func redButtonPressed(sender: UIButton!){
-        
-    }
     /*
     // MARK: - Navigation
 

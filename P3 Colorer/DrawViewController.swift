@@ -21,6 +21,8 @@ class DrawViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         //create bar buttons
+        let backBarButton = UIBarButtonItem(image: UIImage(named: "blackBack"), style: .Plain, target: self, action: "returnHome:")
+        backBarButton.tintColor = UIColor(red:0.91, green:0.91, blue:0.91, alpha:1.0)
         let deleteBarButton = UIBarButtonItem(image: UIImage(named: "greyDelete"), style: .Plain, target: self, action: "deleteView:")
         deleteBarButton.tintColor = UIColor(red:0.91, green:0.91, blue:0.91, alpha:1.0)
         let eraseBarButton = UIBarButtonItem(image: UIImage(named: "greyErase"), style: .Plain, target: self, action: "erase:")
@@ -38,7 +40,7 @@ class DrawViewController: UIViewController {
         flexibleSpace.tintColor = UIColor(red:0.91, green:0.91, blue:0.91, alpha:1.0)
         
         //set up toolbar
-        let toolbarItems = [drawBarButton, flexibleSpace, eraseBarButton, flexibleSpace, colorBarButton, flexibleSpace, resizeBarButton, flexibleSpace, viewBarButton, flexibleSpace, deleteBarButton]
+        let toolbarItems = [backBarButton, flexibleSpace, drawBarButton, flexibleSpace, eraseBarButton, flexibleSpace, colorBarButton, flexibleSpace, resizeBarButton, flexibleSpace, viewBarButton, flexibleSpace, deleteBarButton]
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
         toolbar.frame = CGRectMake(0, view.bounds.height-toolbar.bounds.height, toolbar.bounds.width, toolbar.bounds.height)
@@ -79,6 +81,10 @@ class DrawViewController: UIViewController {
     
     func draw(sender: UIBarButtonItem){
         
+    }
+    
+    func returnHome(sender: UIBarButtonItem){
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     /*

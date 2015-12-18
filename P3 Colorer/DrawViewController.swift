@@ -79,6 +79,7 @@ class DrawViewController: UIViewController {
         sizeToolbar = UIView(frame: CGRectMake(0, view.bounds.height, view.bounds.width, view.bounds.height/6))
         sizeToolbar.layer.contents = UIImage(named: "\(selected!)SizeToolbar")!.CGImage
         //sizeToolbar.backgroundColor = UIColor(patternImage: UIImage(named: "\(selected!)SizeToolbar")!) //looks literally the same w/ this
+        self.view.addSubview(sizeToolbar)
         
         //set up slider labels
         let sliderSpace = CGFloat(10)
@@ -120,6 +121,12 @@ class DrawViewController: UIViewController {
         heightSlider.value = Float(height)
         squareSlider.value = Float(width)
         widthSlider.value = Float(width)
+        heightSlider.addTarget(self, action: "sliderValueChanged:", forControlEvents: .ValueChanged)
+        squareSlider.addTarget(self, action: "sliderValueChanged:", forControlEvents: .ValueChanged)
+        widthSlider.addTarget(self, action: "sliderValueChanged:", forControlEvents: .ValueChanged)
+        heightSlider.tag = 1
+        squareSlider.tag = 2
+        widthSlider.tag = 3
         heightSlider.center.y = heightLabel.center.y
         squareSlider.center.y = squareLabel.center.y
         widthSlider.center.y = widthLabel.center.y
@@ -132,13 +139,10 @@ class DrawViewController: UIViewController {
         heightSlider.setThumbImage(UIImage(named: "\(selected!)SliderThumbHeight")!, forState: .Normal)
         squareSlider.setThumbImage(UIImage(named: "\(selected!)SliderThumbSquare")!, forState: .Normal)
         widthSlider.setThumbImage(UIImage(named: "\(selected!)SliderThumbWidth")!, forState: .Normal)
-        
-        //add sliders & size toolbar to view
         //        widthSlider.convertPoint(widthSlider.center, toView: sizeToolbar) //see if this is actually necessary
         sizeToolbar.addSubview(heightSlider)
         sizeToolbar.addSubview(squareSlider)
         sizeToolbar.addSubview(widthSlider)
-        self.view.addSubview(sizeToolbar)
         
         //set up slider value labels
         heightValueLabel = UILabel(frame: CGRectMake(heightSlider.frame.maxX + sliderSpace, 0, valueLabelWidth, labelHeight))
@@ -263,6 +267,29 @@ class DrawViewController: UIViewController {
     
     func returnHome(sender: UIBarButtonItem){
         self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    func sliderValueChanged(sender: UISlider){
+        let identifier = sender.tag
+        switch identifier{
+        case 1: //height
+            height = Int(round(heightSlider.value))
+            heightValueLabel.text = "\(height)"
+        case 2: //square
+            heightSlider.value = squareSlider.value
+            widthSlider.value = squareSlider.value
+            height = Int(round(squareSlider.value))
+            width = Int(round(squareSlider.value))
+            heightValueLabel.text = "\(height)"
+            widthValueLabel.text = "\(width)"
+            squareValueLabel.text = "\(width)"
+        case 3: //width
+            width = Int(round(widthSlider.value))
+            widthValueLabel.text = "\(width)"
+        default: //height
+            height = Int(round(heightSlider.value))
+            heightValueLabel.text = "\(height)"
+        }
     }
     
     /*

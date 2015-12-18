@@ -14,6 +14,7 @@ class DrawViewController: UIViewController {
     var canvas: UIView = UIView()
     var shape: String?
     var shapeColor: UIColor?
+    var fontColor: UIColor = UIColor(red:0.91, green:0.91, blue:0.91, alpha:1.0)
     var height: Int = 60
     var width: Int = 60
     var rectangles: Set<UIView> = Set<UIView>()
@@ -23,12 +24,19 @@ class DrawViewController: UIViewController {
     var barButtonColor: UIColor?
     var eraseBarButton = UIBarButtonItem()
     var viewBarButton = UIBarButtonItem()
+    var resizeBarButton = UIBarButtonItem()
     
     var eraseMode: Bool = false
     var visible: Bool = true
     var sizeMode: Bool = false
     
     var sizeToolbar: UIView = UIView()
+    var heightSlider: UISlider = UISlider()
+    var squareSlider: UISlider = UISlider()
+    var widthSlider: UISlider = UISlider()
+    var heightValueLabel: UILabel = UILabel()
+    var squareValueLabel: UILabel = UILabel()
+    var widthValueLabel: UILabel = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +49,7 @@ class DrawViewController: UIViewController {
         deleteBarButton.tintColor = barButtonColor
         eraseBarButton = UIBarButtonItem(image: UIImage(named: "greyErase"), style: .Plain, target: self, action: "erase:")
         eraseBarButton.tintColor = barButtonColor
-        let resizeBarButton = UIBarButtonItem(image: UIImage(named: "greyResize"), style: .Plain, target: self, action: "resize:")
+        resizeBarButton = UIBarButtonItem(image: UIImage(named: "greyResize"), style: .Plain, target: self, action: "resize:")
         resizeBarButton.tintColor = barButtonColor
         viewBarButton = UIBarButtonItem(image: UIImage(named: "greyView"), style: .Plain, target: self, action: "view:")
         viewBarButton.tintColor = barButtonColor
@@ -55,7 +63,7 @@ class DrawViewController: UIViewController {
         //set up toolbar
         let toolbarItems = [backBarButton, flexibleSpace, drawBarButton, flexibleSpace, eraseBarButton, flexibleSpace, colorBarButton, flexibleSpace, resizeBarButton, flexibleSpace, viewBarButton, flexibleSpace, deleteBarButton]
         toolbar.sizeToFit()
-        toolbar.frame = CGRectMake(0, view.bounds.height-toolbar.bounds.height, toolbar.bounds.width, toolbar.bounds.height)
+        toolbar.frame = CGRectMake(0, view.bounds.height-toolbar.bounds.height, toolbar.bounds.height, toolbar.bounds.height)
         toolbar.sizeToFit()
         toolbar.barTintColor = UIColor(patternImage: UIImage(named: "\(selected!)Toolbar")!)
         //toolbar.layer.contents = UIImage(named: "\(selected!)Toolbar")!.CGImage //soft gradient color toolbar
@@ -64,14 +72,97 @@ class DrawViewController: UIViewController {
         self.view.addSubview(toolbar)
         
         //set up canvas
-        canvas = UIView(frame: CGRectMake(0, 0, view.bounds.width, view.bounds.height-toolbar.bounds.height))
+        canvas = UIView(frame: CGRectMake(0, 0, view.bounds.height, view.bounds.height-toolbar.bounds.height))
         self.view.insertSubview(canvas, belowSubview: toolbar)
         
         //set up size toolbar
         sizeToolbar = UIView(frame: CGRectMake(0, view.bounds.height, view.bounds.width, view.bounds.height/6))
         sizeToolbar.layer.contents = UIImage(named: "\(selected!)SizeToolbar")!.CGImage
         //sizeToolbar.backgroundColor = UIColor(patternImage: UIImage(named: "\(selected!)SizeToolbar")!) //looks literally the same w/ this
+        
+        //set up slider labels
+        let sliderSpace = CGFloat(10)
+        let sliderCenterY = sizeToolbar.bounds.height/6
+        let labelWidth = CGFloat(80)
+        let labelHeight = CGFloat(21)
+        let valueLabelWidth = CGFloat(43)
+
+        let heightLabel = UILabel(frame: CGRectMake(sliderSpace, 0, labelWidth, labelHeight))
+        let squareLabel = UILabel(frame: CGRectMake(sliderSpace, 0, labelWidth, labelHeight))
+        let widthLabel = UILabel(frame: CGRectMake(sliderSpace, 0, labelWidth, labelHeight))
+        heightLabel.center.y = sliderCenterY
+        squareLabel.center.y = sliderCenterY*3
+        widthLabel.center.y = sliderCenterY*5
+        heightLabel.textAlignment = NSTextAlignment.Right
+        squareLabel.textAlignment = NSTextAlignment.Right
+        widthLabel.textAlignment = NSTextAlignment.Right
+        heightLabel.textColor = barButtonColor
+        squareLabel.textColor = barButtonColor
+        widthLabel.textColor = barButtonColor
+        heightLabel.font = UIFont(name: "ArcaMajora-Heavy", size: 18)
+        squareLabel.font = UIFont(name: "ArcaMajora-Heavy", size: 18)
+        widthLabel.font = UIFont(name: "ArcaMajora-Heavy", size: 18)
+        heightLabel.text = "HEIGHT"
+        squareLabel.text = "SQUARE"
+        widthLabel.text = "WIDTH"
+        sizeToolbar.addSubview(heightLabel)
+        sizeToolbar.addSubview(squareLabel)
+        sizeToolbar.addSubview(widthLabel)
+        
+        //set up sliders
+        let sliderWidth = sizeToolbar.bounds.width - (2*sliderSpace) - labelWidth - (2*sliderSpace) - valueLabelWidth
+        heightSlider = UISlider(frame: CGRectMake(heightLabel.frame.maxX + sliderSpace, 0, sliderWidth, 31))
+        squareSlider = UISlider(frame: CGRectMake(squareLabel.frame.maxX + sliderSpace, 0, sliderWidth, 31))
+        widthSlider = UISlider(frame: CGRectMake(widthLabel.frame.maxX + sliderSpace, 0, sliderWidth, 31))
+        heightSlider.maximumValue = 100
+        squareSlider.maximumValue = 100
+        widthSlider.maximumValue = 100
+        heightSlider.value = Float(height)
+        squareSlider.value = Float(width)
+        widthSlider.value = Float(width)
+        heightSlider.center.y = heightLabel.center.y
+        squareSlider.center.y = squareLabel.center.y
+        widthSlider.center.y = widthLabel.center.y
+        heightSlider.minimumTrackTintColor = barButtonColor
+        squareSlider.minimumTrackTintColor = barButtonColor
+        widthSlider.minimumTrackTintColor = barButtonColor
+        heightSlider.maximumTrackTintColor = fontColor
+        squareSlider.maximumTrackTintColor = fontColor
+        widthSlider.maximumTrackTintColor = fontColor
+        heightSlider.setThumbImage(UIImage(named: "\(selected!)SliderThumbHeight")!, forState: .Normal)
+        squareSlider.setThumbImage(UIImage(named: "\(selected!)SliderThumbSquare")!, forState: .Normal)
+        widthSlider.setThumbImage(UIImage(named: "\(selected!)SliderThumbWidth")!, forState: .Normal)
+        
+        //add sliders & size toolbar to view
+        //        widthSlider.convertPoint(widthSlider.center, toView: sizeToolbar) //see if this is actually necessary
+        sizeToolbar.addSubview(heightSlider)
+        sizeToolbar.addSubview(squareSlider)
+        sizeToolbar.addSubview(widthSlider)
         self.view.addSubview(sizeToolbar)
+        
+        //set up slider value labels
+        heightValueLabel = UILabel(frame: CGRectMake(heightSlider.frame.maxX + sliderSpace, 0, valueLabelWidth, labelHeight))
+        squareValueLabel = UILabel(frame: CGRectMake(squareSlider.frame.maxX + sliderSpace, 0, valueLabelWidth, labelHeight))
+        widthValueLabel = UILabel(frame: CGRectMake(widthSlider.frame.maxX + sliderSpace, 0, valueLabelWidth, labelHeight))
+        heightValueLabel.center.y = heightLabel.center.y
+        squareValueLabel.center.y = squareLabel.center.y
+        widthValueLabel.center.y = widthLabel.center.y
+        heightValueLabel.textAlignment = NSTextAlignment.Left
+        squareValueLabel.textAlignment = NSTextAlignment.Left
+        widthValueLabel.textAlignment = NSTextAlignment.Left
+        heightValueLabel.textColor = barButtonColor
+        squareValueLabel.textColor = barButtonColor
+        widthValueLabel.textColor = barButtonColor
+        heightValueLabel.font = UIFont(name: "ArcaMajora-Heavy", size: 18)
+        squareValueLabel.font = UIFont(name: "ArcaMajora-Heavy", size: 18)
+        widthValueLabel.font = UIFont(name: "ArcaMajora-Heavy", size: 18)
+        heightValueLabel.text = "\(height)"
+        squareValueLabel.text = "\(width)"
+        widthValueLabel.text = "\(width)"
+        sizeToolbar.addSubview(heightValueLabel)
+        sizeToolbar.addSubview(squareValueLabel)
+        sizeToolbar.addSubview(widthValueLabel)
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -122,7 +213,7 @@ class DrawViewController: UIViewController {
         eraseMode = !eraseMode
         
         if eraseMode{ //eraseMode on
-            eraseBarButton.tintColor = UIColor(red:0.91, green:0.91, blue:0.91, alpha:1.0)
+            eraseBarButton.tintColor = fontColor
         }else{ //eraseMode off
             eraseBarButton.tintColor = barButtonColor
         }
@@ -132,12 +223,14 @@ class DrawViewController: UIViewController {
         sizeMode = !sizeMode
         
         if sizeMode{
-            UIView.animateWithDuration(1.0, animations: {
+            resizeBarButton.tintColor = fontColor
+            UIView.animateWithDuration(0.5, animations: {
                 self.sizeToolbar.center.y = self.view.bounds.height - self.sizeToolbar.bounds.height/2
                 self.toolbar.center.y = self.sizeToolbar.center.y - self.sizeToolbar.bounds.height/2 - self.toolbar.bounds.height/2
             })
         } else{
-            UIView.animateWithDuration(1.0, animations: {
+            resizeBarButton.tintColor = barButtonColor
+            UIView.animateWithDuration(0.5, animations: {
                 self.sizeToolbar.center.y = self.view.bounds.height + self.sizeToolbar.bounds.height/2
                 self.toolbar.center.y = self.view.bounds.height - self.toolbar.bounds.height/2
             })
@@ -156,7 +249,7 @@ class DrawViewController: UIViewController {
             for rect in rectangles{
                 rect.alpha = 0
             }
-            viewBarButton.tintColor = UIColor(red:0.91, green:0.91, blue:0.91, alpha:1.0)
+            viewBarButton.tintColor = fontColor
         }
     }
     

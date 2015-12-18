@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "triangleSizeToolbar2.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "blueSliderThumbSquare.png",
       "scale" : "2x"
     },
     {

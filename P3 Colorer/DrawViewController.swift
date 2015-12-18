@@ -25,10 +25,12 @@ class DrawViewController: UIViewController {
     var eraseBarButton = UIBarButtonItem()
     var viewBarButton = UIBarButtonItem()
     var resizeBarButton = UIBarButtonItem()
+    var colorBarButton = UIBarButtonItem()
     
     var eraseMode: Bool = false
     var visible: Bool = true
     var sizeMode: Bool = false
+    var colorMode: Bool = false
     
     var sizeToolbar: UIView = UIView()
     var heightSlider: UISlider = UISlider()
@@ -37,6 +39,8 @@ class DrawViewController: UIViewController {
     var heightValueLabel: UILabel = UILabel()
     var squareValueLabel: UILabel = UILabel()
     var widthValueLabel: UILabel = UILabel()
+    
+    var colorSlider: ColorSlider = ColorSlider()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,8 +57,8 @@ class DrawViewController: UIViewController {
         resizeBarButton.tintColor = barButtonColor
         viewBarButton = UIBarButtonItem(image: UIImage(named: "greyView"), style: .Plain, target: self, action: "view:")
         viewBarButton.tintColor = barButtonColor
-        let colorBarButton = UIBarButtonItem(image: UIImage(named: "greyColor"), style: .Plain, target: self, action: "color:")
-        colorBarButton.tintColor = barButtonColor
+        colorBarButton = UIBarButtonItem(image: UIImage(named: "greyColor"), style: .Plain, target: self, action: "color:")
+        colorBarButton.tintColor = shapeColor
         let drawBarButton = UIBarButtonItem(image: UIImage(named: "greyDraw"), style: .Plain, target: self, action: "draw:")
         drawBarButton.tintColor = barButtonColor
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem:
@@ -167,6 +171,16 @@ class DrawViewController: UIViewController {
         sizeToolbar.addSubview(squareValueLabel)
         sizeToolbar.addSubview(widthValueLabel)
         
+//        //set up color toolbar
+        colorSlider = ColorSlider(frame: CGRectMake(view.bounds.width, 30, view.bounds.width/16, view.bounds.height/4))
+//        colorSlider.previewEnabled = true
+        colorSlider.borderColor = barButtonColor!
+        colorSlider.addTarget(self, action: "willChangeColor:", forControlEvents: .TouchDown)
+        colorSlider.addTarget(self, action: "isChangingColor:", forControlEvents: .ValueChanged)
+        colorSlider.addTarget(self, action: "didChangeColor:", forControlEvents: .TouchUpOutside)
+        colorSlider.addTarget(self, action: "didChangeColor:", forControlEvents: .TouchUpInside)
+        self.view.insertSubview(colorSlider, aboveSubview: canvas)
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -258,9 +272,36 @@ class DrawViewController: UIViewController {
     }
     
     func color(sender: UIBarButtonItem){
+        colorMode = !colorMode
         
+        if colorMode{
+            colorBarButton.tintColor = fontColor
+            UIView.animateWithDuration(0.5, animations: {
+                self.colorSlider.center.x = self.view.bounds.width - self.colorSlider.bounds.width/2
+            })
+        } else{
+            colorBarButton.tintColor = shapeColor
+            UIView.animateWithDuration(0.5, animations: {
+                self.colorSlider.center.x = self.view.bounds.width + self.colorSlider.bounds.width/2
+            })
+        }
     }
     
+    // MARK: ColorSlider Events
+    func willChangeColor(slider: ColorSlider) {
+        canvas.userInteractionEnabled = false
+    }
+    
+   	func isChangingColor(slider: ColorSlider) {
+        colorBarButton.tintColor = colorSlider.color
+    }
+    
+    func didChangeColor(slider: ColorSlider) {
+        colorBarButton.tintColor = colorSlider.color
+        shapeColor = colorSlider.color
+        canvas.userInteractionEnabled = true
+    }
+
     func draw(sender: UIBarButtonItem){
         
     }

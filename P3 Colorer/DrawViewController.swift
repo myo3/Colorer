@@ -19,6 +19,7 @@ class DrawViewController: UIViewController {
     var width: Int = 60
     var rectangles: Set<UIView> = Set<UIView>()
     var shapeView: UIView = UIView()
+    var selectedShape: UIView?
     
     var toolbar: UIToolbar = UIToolbar()
     var barButtonColor: UIColor?
@@ -26,11 +27,13 @@ class DrawViewController: UIViewController {
     var viewBarButton = UIBarButtonItem()
     var resizeBarButton = UIBarButtonItem()
     var colorBarButton = UIBarButtonItem()
+    var drawBarButton = UIBarButtonItem()
     
     var eraseMode: Bool = false
     var visible: Bool = true
     var sizeMode: Bool = false
     var colorMode: Bool = false
+    var drawMode: Bool = false
     
     var sizeToolbar: UIView = UIView()
     var heightSlider: UISlider = UISlider()
@@ -59,7 +62,7 @@ class DrawViewController: UIViewController {
         viewBarButton.tintColor = barButtonColor
         colorBarButton = UIBarButtonItem(image: UIImage(named: "greyColor"), style: .Plain, target: self, action: "color:")
         colorBarButton.tintColor = shapeColor
-        let drawBarButton = UIBarButtonItem(image: UIImage(named: "greyDraw"), style: .Plain, target: self, action: "draw:")
+        drawBarButton = UIBarButtonItem(image: UIImage(named: "greyDraw"), style: .Plain, target: self, action: "draw:")
         drawBarButton.tintColor = barButtonColor
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem:
             .FlexibleSpace, target: self, action: nil)
@@ -189,14 +192,7 @@ class DrawViewController: UIViewController {
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        if eraseMode{ //eraseMode on
-            if let touch: UITouch! = touches.first!{
-                if rectangles.contains(touch.view!) {
-                    rectangles.remove(touch.view!)
-                    touch.view?.removeFromSuperview()
-                }
-            }
-        } else if !eraseMode && visible{ //eraseMode off, visbility on,
+        if !eraseMode && visible && drawMode{ //eraseMode off, visbility on, draw on
             let location = touches.first!.locationInView(view)
             //create shape
             if shape == "triangle"{
@@ -211,6 +207,15 @@ class DrawViewController: UIViewController {
             shapeView.center = location
             //set shape color
             shapeView.backgroundColor = shapeColor
+            //add gesture recognizers
+            let tap = UITapGestureRecognizer(target: self, action: "tapShape:")
+            let pan = UIPanGestureRecognizer(target: self, action: "moveShape:")
+            let rotation = UIRotationGestureRecognizer(target: self, action: "rotateShape:")
+            let pinch = UIPinchGestureRecognizer(target: self, action: "scaleShape:")
+            shapeView.addGestureRecognizer(tap)
+            shapeView.addGestureRecognizer(pan)
+            shapeView.addGestureRecognizer(rotation)
+            shapeView.addGestureRecognizer(pinch)
             //add shape to view
             if !CGRectIntersectsRect(shapeView.frame, sizeToolbar.frame){
                 canvas.addSubview(shapeView)
@@ -220,20 +225,94 @@ class DrawViewController: UIViewController {
         }
     }
     
-    func deleteView(sender: UIBarButtonItem) {
-        for rect in rectangles{
-            rect.removeFromSuperview()
+    //Shape functions
+    func tapShape(sender: UITapGestureRecognizer){
+        selectedShape = sender.view!
+//        selectedShape?.layer.borderColor = UIColor.blackColor().CGColor
+//        selectedShape?.layer.borderWidth = 3
+//        
+//        let resizeFrame = UIImageView(image: UIImage(named: "resizeLayer"))
+//        resizeFrame.frame = (selectedShape?.frame)!
+//        resizeFrame.contentMode = UIViewContentMode.ScaleAspectFill
+//        selectedShape?.addSubview(resizeFrame)
+//        self.view.insertSubview(resizeFrame, aboveSubview: selectedShape!)
+//        
+//        let sublayer = CALayer()
+//        sublayer.bounds = (selectedShape?.bounds)!
+//        sublayer.backgroundColor = UIColor.redColor().CGColor
+//        sublayer.frame = (selectedShape?.frame)!
+//        sublayer.contents = UIImage(named: "resizeLayer")
+//        selectedShape?.layer.addSublayer(sublayer)
+//        selectedShape?.layer.contents = imageView.image
+        
+        if eraseMode{
+            if rectangles.contains(selectedShape!) {
+                rectangles.remove(selectedShape!)
+                selectedShape!.removeFromSuperview()
+            }
         }
-        rectangles.removeAll()
     }
     
-    func erase(sender: UIBarButtonItem){
-        eraseMode = !eraseMode
+    func moveShape(sender: UIPanGestureRecognizer){
+        let shapeView = sender.view!
+        let trans = sender.translationInView(canvas)
+        shapeView.center = CGPoint(x: shapeView.center.x + trans.x, y: shapeView.center.y + trans.y)
+        sender.setTranslation(CGPointZero, inView: canvas)
+    }
+    
+    func rotateShape(sender: UIRotationGestureRecognizer){
+        let shapeView = sender.view!
+        let rotation = sender.rotation
+        shapeView.transform = CGAffineTransformRotate(shapeView.transform, rotation)
+        sender.rotation = 0
+    }
+    
+    func scaleShape(sender: UIPinchGestureRecognizer){
+        if let shapeView = sender.view {
+            shapeView.transform = CGAffineTransformScale(shapeView.transform,
+                sender.scale, sender.scale)
+            sender.scale = 1
+        }
+    }
+    
+    //ColorSlider Events
+    func willChangeColor(slider: ColorSlider) {
+        canvas.userInteractionEnabled = false
+    }
+    
+   	func isChangingColor(slider: ColorSlider) {
+        colorBarButton.tintColor = colorSlider.color
+    }
+    
+    func didChangeColor(slider: ColorSlider) {
+        colorBarButton.tintColor = colorSlider.color
+        shapeColor = colorSlider.color
+        canvas.userInteractionEnabled = true
+    }
+    
+    //Toolbar functions
+    func draw(sender: UIBarButtonItem){
+        drawMode = !drawMode
+        if drawMode{
+            drawBarButton.tintColor = fontColor
+        } else{
+            drawBarButton.tintColor = barButtonColor
+        }
+    }
+    
+    func color(sender: UIBarButtonItem){
+        colorMode = !colorMode
         
-        if eraseMode{ //eraseMode on
-            eraseBarButton.tintColor = fontColor
-        }else{ //eraseMode off
-            eraseBarButton.tintColor = barButtonColor
+        if colorMode{
+            colorBarButton.tintColor = fontColor
+            UIView.animateWithDuration(0.5, animations: {
+                self.colorSlider.center.x = self.view.bounds.width - self.colorSlider.bounds.width/2
+            })
+        } else{
+            colorBarButton.tintColor = shapeColor
+            UIView.animateWithDuration(0.5, animations: {
+                self.colorSlider.center.x = self.view.bounds.width + self.colorSlider.bounds.width/2
+            })
         }
     }
     
@@ -255,6 +334,16 @@ class DrawViewController: UIViewController {
         }
     }
     
+    func erase(sender: UIBarButtonItem){
+        eraseMode = !eraseMode
+        
+        if eraseMode{ //eraseMode on
+            eraseBarButton.tintColor = fontColor
+        }else{ //eraseMode off
+            eraseBarButton.tintColor = barButtonColor
+        }
+    }
+    
     func view(sender: UIBarButtonItem){
         visible = !visible
         
@@ -271,45 +360,18 @@ class DrawViewController: UIViewController {
         }
     }
     
-    func color(sender: UIBarButtonItem){
-        colorMode = !colorMode
-        
-        if colorMode{
-            colorBarButton.tintColor = fontColor
-            UIView.animateWithDuration(0.5, animations: {
-                self.colorSlider.center.x = self.view.bounds.width - self.colorSlider.bounds.width/2
-            })
-        } else{
-            colorBarButton.tintColor = shapeColor
-            UIView.animateWithDuration(0.5, animations: {
-                self.colorSlider.center.x = self.view.bounds.width + self.colorSlider.bounds.width/2
-            })
+    func deleteView(sender: UIBarButtonItem) {
+        for rect in rectangles{
+            rect.removeFromSuperview()
         }
-    }
-    
-    // MARK: ColorSlider Events
-    func willChangeColor(slider: ColorSlider) {
-        canvas.userInteractionEnabled = false
-    }
-    
-   	func isChangingColor(slider: ColorSlider) {
-        colorBarButton.tintColor = colorSlider.color
-    }
-    
-    func didChangeColor(slider: ColorSlider) {
-        colorBarButton.tintColor = colorSlider.color
-        shapeColor = colorSlider.color
-        canvas.userInteractionEnabled = true
-    }
-
-    func draw(sender: UIBarButtonItem){
-        
+        rectangles.removeAll()
     }
     
     func returnHome(sender: UIBarButtonItem){
         self.navigationController?.popViewControllerAnimated(true)
     }
     
+    //Slider function
     func sliderValueChanged(sender: UISlider){
         let identifier = sender.tag
         switch identifier{

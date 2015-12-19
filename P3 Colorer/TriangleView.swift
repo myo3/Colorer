@@ -10,14 +10,8 @@ import UIKit
 
 class TriangleView: UIView {
     
-    /*
     // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-    // Drawing code
-    }
-    */
-    
+    // An empty implementation adversely affects performance during animation.    
     override func drawRect(rect: CGRect) {
         
         // Get Height and Width

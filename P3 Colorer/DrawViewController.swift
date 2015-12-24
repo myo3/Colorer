@@ -19,7 +19,6 @@ class DrawViewController: UIViewController {
     var width: Int = 60
     var rectangles: Set<UIView> = Set<UIView>()
     var shapeView: UIView = UIView()
-    var selectedShape: UIView?
     
     var toolbar: UIToolbar = UIToolbar()
     var barButtonColor: UIColor?
@@ -29,11 +28,11 @@ class DrawViewController: UIViewController {
     var colorBarButton = UIBarButtonItem()
     var drawBarButton = UIBarButtonItem()
     
-    var eraseMode: Bool = false
-    var visible: Bool = true
-    var sizeMode: Bool = false
-    var colorMode: Bool = false
     var drawMode: Bool = false
+    var eraseMode: Bool = false
+    var colorMode: Bool = false
+    var resizeMode: Bool = false
+    var visible: Bool = true
     
     var sizeToolbar: UIView = UIView()
     var heightSlider: UISlider = UISlider()
@@ -44,6 +43,13 @@ class DrawViewController: UIViewController {
     var widthValueLabel: UILabel = UILabel()
     
     var colorSlider: ColorSlider = ColorSlider()
+    
+    var selectedShape: UIView?
+    var corners: [UIImageView] = [UIImageView]()
+    // Symbols       Indexes
+    //o---^---o     0---5---2
+    //<---*--->     1---8---3
+    //o---v---o     6---7---4
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -174,7 +180,7 @@ class DrawViewController: UIViewController {
         sizeToolbar.addSubview(squareValueLabel)
         sizeToolbar.addSubview(widthValueLabel)
         
-//        //set up color toolbar
+        //set up color toolbar
         colorSlider = ColorSlider(frame: CGRectMake(view.bounds.width, 30, view.bounds.width/16, view.bounds.height/4))
 //        colorSlider.previewEnabled = true
         colorSlider.borderColor = barButtonColor!
@@ -184,6 +190,16 @@ class DrawViewController: UIViewController {
         colorSlider.addTarget(self, action: "didChangeColor:", forControlEvents: .TouchUpInside)
         self.view.insertSubview(colorSlider, aboveSubview: canvas)
         
+        //set up corners: set color, add pan feature, count = 9
+        for i in 0...8 {
+            let corner = UIImageView(frame: CGRectMake(0, 0, 10, 10))
+            corner.backgroundColor = fontColor
+            corners.append(corner)
+            corner.tag = i
+            corner.userInteractionEnabled = true
+            let pan = UIPanGestureRecognizer(target: self, action: "moveShape:")
+            corner.addGestureRecognizer(pan)
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -209,13 +225,13 @@ class DrawViewController: UIViewController {
             shapeView.backgroundColor = shapeColor
             //add gesture recognizers
             let tap = UITapGestureRecognizer(target: self, action: "tapShape:")
-            let pan = UIPanGestureRecognizer(target: self, action: "moveShape:")
+//            let pan = UIPanGestureRecognizer(target: self, action: "moveShape:")
             let rotation = UIRotationGestureRecognizer(target: self, action: "rotateShape:")
-            let pinch = UIPinchGestureRecognizer(target: self, action: "scaleShape:")
+            //let pinch = UIPinchGestureRecognizer(target: self, action: "scaleShape:")
             shapeView.addGestureRecognizer(tap)
-            shapeView.addGestureRecognizer(pan)
+//            shapeView.addGestureRecognizer(pan)
             shapeView.addGestureRecognizer(rotation)
-            shapeView.addGestureRecognizer(pinch)
+//            shapeView.addGestureRecognizer(pinch)
             //add shape to view
             if !CGRectIntersectsRect(shapeView.frame, sizeToolbar.frame){
                 canvas.addSubview(shapeView)
@@ -228,22 +244,16 @@ class DrawViewController: UIViewController {
     //Shape functions
     func tapShape(sender: UITapGestureRecognizer){
         selectedShape = sender.view!
-//        selectedShape?.layer.borderColor = UIColor.blackColor().CGColor
-//        selectedShape?.layer.borderWidth = 3
-//        
-//        let resizeFrame = UIImageView(image: UIImage(named: "resizeLayer"))
-//        resizeFrame.frame = (selectedShape?.frame)!
-//        resizeFrame.contentMode = UIViewContentMode.ScaleAspectFill
-//        selectedShape?.addSubview(resizeFrame)
-//        self.view.insertSubview(resizeFrame, aboveSubview: selectedShape!)
-//        
-//        let sublayer = CALayer()
-//        sublayer.bounds = (selectedShape?.bounds)!
-//        sublayer.backgroundColor = UIColor.redColor().CGColor
-//        sublayer.frame = (selectedShape?.frame)!
-//        sublayer.contents = UIImage(named: "resizeLayer")
-//        selectedShape?.layer.addSublayer(sublayer)
-//        selectedShape?.layer.contents = imageView.image
+        
+        if resizeMode{
+            //place each corner in view
+            for corner in corners {
+                self.view.insertSubview(corner, aboveSubview: selectedShape!)
+            }
+            
+            //place each corner in proper place
+            corners = placeCorners(corners, selectedShape: selectedShape!)
+        }
         
         if eraseMode{
             if rectangles.contains(selectedShape!) {
@@ -254,10 +264,99 @@ class DrawViewController: UIViewController {
     }
     
     func moveShape(sender: UIPanGestureRecognizer){
-        let shapeView = sender.view!
+        let corner = sender.view as! UIImageView
+        
+        //resize shape
         let trans = sender.translationInView(canvas)
-        shapeView.center = CGPoint(x: shapeView.center.x + trans.x, y: shapeView.center.y + trans.y)
+        switch corner.tag{
+        case 0: //works, combine 1 & 5
+            corner.center.x = corner.center.x + trans.x
+            corner.center.y = corner.center.y + trans.y
+            if let shape = selectedShape{
+                shape.frame.size.width = shape.frame.width - trans.x
+                shape.center.x = shape.center.x + trans.x
+                shape.frame.size.height = shape.frame.height - trans.y
+                shape.center.y = shape.center.y + trans.y
+            }
+        case 1: //works
+            corner.center.x = corner.center.x + trans.x
+            if let shape = selectedShape{
+                shape.frame.size.width = shape.frame.width - trans.x
+                shape.center.x = shape.center.x + trans.x
+            }
+        case 2: //works, combine 5 & 3
+            corner.center = CGPoint(x: corner.center.x + trans.x, y: corner.center.y + trans.y)
+            if let shape = selectedShape{
+                shape.frame.size = CGSize(width: shape.frame.width + trans.x , height: shape.frame.height - trans.y)
+                shape.center.y = shape.center.y + trans.y
+            }
+        case 3: //works
+            corner.center.x = corner.center.x + trans.x
+            if let shape = selectedShape{
+                shape.frame.size.width = shape.frame.width + trans.x
+            }
+        case 4: //works
+            corner.center = CGPoint(x: corner.center.x + trans.x, y: corner.center.y + trans.y)
+            if let shape = selectedShape{
+                shape.frame.size = CGSize(width: shape.frame.width + trans.x , height: shape.frame.height + trans.y)
+            }
+        case 5: //works
+            corner.center.y = corner.center.y + trans.y
+            if let shape = selectedShape{
+                shape.frame.size.height = shape.frame.height - trans.y
+                shape.center.y = shape.center.y + trans.y
+            }
+        case 6: //works, combine 1 & 7
+            corner.center.x = corner.center.x + trans.x
+            corner.center.y = corner.center.y + trans.y
+            if let shape = selectedShape{
+                shape.frame.size.width = shape.frame.width - trans.x
+                shape.frame.size.height = shape.frame.height + trans.y
+                shape.center.x = shape.center.x + trans.x
+            }
+        case 7: //works
+            corner.center.y = corner.center.y + trans.y
+            if let shape = selectedShape{
+                shape.frame.size.height = shape.frame.height + trans.y
+            }
+        case 8: //works
+            corner.center = CGPoint(x: corner.center.x + trans.x, y: corner.center.y + trans.y)
+            selectedShape?.center = CGPoint(x: (selectedShape?.center.x)! + trans.x, y: (selectedShape?.center.y)! + trans.y)
+        default:
+            corner.center = CGPoint(x: corner.center.x + trans.x, y: corner.center.y + trans.y)
+            print("default called")
+        }
+        
         sender.setTranslation(CGPointZero, inView: canvas)
+        
+        //hide corners while changing size
+        if (sender.state == UIGestureRecognizerState.Began || sender.state == UIGestureRecognizerState.Changed){
+            for c in corners{
+                //set panned corner to panIcon
+                if c.tag == corner.tag{
+                    corner.backgroundColor = UIColor.clearColor()
+                    corner.image = UIImage(named: "panIcon")
+                    corner.contentMode = UIViewContentMode.ScaleAspectFit
+                    continue
+                }
+                c.hidden = true
+            }
+        }
+        //unhide corners when finish changing size
+        if(sender.state == UIGestureRecognizerState.Ended || sender.state == UIGestureRecognizerState.Failed || sender.state == UIGestureRecognizerState.Cancelled){
+            for c in corners{
+                //set panned corner back to grey square
+                if c.tag == corner.tag{
+                    corner.backgroundColor = fontColor
+                    corner.image = nil
+                    continue
+                }
+                c.hidden = false
+            }
+            if let shape = selectedShape{
+                corners = placeCorners(corners, selectedShape: shape)
+            }
+        }
     }
     
     func rotateShape(sender: UIRotationGestureRecognizer){
@@ -273,6 +372,40 @@ class DrawViewController: UIViewController {
                 sender.scale, sender.scale)
             sender.scale = 1
         }
+    }
+    
+        //Pre-conditon: corners is an array with count of 9
+        // Symbols       Indexes
+        //o---^---o     0---5---2
+        //<---*--->     1---8---3
+        //o---v---o     6---7---4
+    func placeCorners(corners: [UIImageView], selectedShape: UIView)-> [UIImageView]{
+        //place the diagonal corners (o)
+        corners[0].center.x = selectedShape.frame.minX
+        corners[0].center.y = selectedShape.frame.minY
+        corners[2].center.x = selectedShape.frame.maxX
+        corners[2].center.y = selectedShape.frame.minY
+        corners[6].center.x = selectedShape.frame.minX
+        corners[6].center.y = selectedShape.frame.maxY
+        corners[4].center.x = selectedShape.frame.maxX
+        corners[4].center.y = selectedShape.frame.maxY
+        
+        //place the horizontal corners (< >)
+        corners[1].center.x = selectedShape.frame.minX
+        corners[1].center.y = selectedShape.frame.midY
+        corners[3].center.x = selectedShape.frame.maxX
+        corners[3].center.y = selectedShape.frame.midY
+        
+        //place the vertical corners (^ v)
+        corners[5].center.x = selectedShape.frame.midX
+        corners[5].center.y = selectedShape.frame.minY
+        corners[7].center.x = selectedShape.frame.midX
+        corners[7].center.y = selectedShape.frame.maxY
+        
+        //place the center (*)
+        corners[8].center = selectedShape.center
+        
+        return corners
     }
     
     //ColorSlider Events
@@ -317,9 +450,9 @@ class DrawViewController: UIViewController {
     }
     
     func resize(sender: UIBarButtonItem){
-        sizeMode = !sizeMode
+        resizeMode = !resizeMode
         
-        if sizeMode{
+        if resizeMode{
             resizeBarButton.tintColor = fontColor
             UIView.animateWithDuration(0.5, animations: {
                 self.sizeToolbar.center.y = self.view.bounds.height - self.sizeToolbar.bounds.height/2
@@ -331,6 +464,10 @@ class DrawViewController: UIViewController {
                 self.sizeToolbar.center.y = self.view.bounds.height + self.sizeToolbar.bounds.height/2
                 self.toolbar.center.y = self.view.bounds.height - self.toolbar.bounds.height/2
             })
+            for corner in corners{
+                corner.removeFromSuperview()
+            }
+            selectedShape = nil
         }
     }
     

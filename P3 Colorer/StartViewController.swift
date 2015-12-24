@@ -98,8 +98,7 @@ class StartViewController: UIViewController {
         }
         shapeVC.view.backgroundColor = UIColor.whiteColor()
         
-        self.navigationController?.pushViewController(shapeVC, animated: true)
-        
+        self.navigationController?.pushViewController(shapeVC, animated: true)        
     }
     
     /*

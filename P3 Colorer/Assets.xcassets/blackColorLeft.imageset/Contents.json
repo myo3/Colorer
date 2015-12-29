@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "blackColorLeft.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "createIcon.png",
       "scale" : "2x"
     },
     {

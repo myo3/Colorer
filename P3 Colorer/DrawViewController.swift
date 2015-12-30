@@ -56,6 +56,8 @@ class DrawViewController: UIViewController {
     var toolbarExpanded: Bool = false
     
     var drawToolbar: UIView = UIView()
+    var shapeSelector: UISegmentedControl = UISegmentedControl()
+    var segments: [UIView] = [UIView]()
     var heightSlider: UISlider = UISlider()
     var widthSlider: UISlider = UISlider()
     var heightValueLabel: UILabel = UILabel()
@@ -195,17 +197,20 @@ class DrawViewController: UIViewController {
         
         //set up shape selector
         let types = ["rectangle", "circle", "triangle"]
-        let shapeSelector = UISegmentedControl(items: types)
+        shapeSelector = UISegmentedControl(items: types)
         shapeSelector.frame = CGRectMake(shapeTypeLabel.frame.maxX + sliderSpace, 0, sliderHeight*3 + 30, sliderHeight)
         shapeSelector.center.y = shapeTypeLabel.center.y
         shapeSelector.tintColor = colorGreyDark
         shapeSelector.removeBorders()
-        shapeSelector.selectedSegmentIndex = 0 //default: select rectangle
-        (shapeSelector.subviews[0] as UIView).tintColor = colorGreyLight
         shapeSelector.addTarget(self, action: "selectShape:", forControlEvents: .ValueChanged)
         shapeSelector.setImage(UIImage(named: "rectangle"), forSegmentAtIndex: 0)
         shapeSelector.setImage(UIImage(named: "circle"), forSegmentAtIndex: 1)
         shapeSelector.setImage(UIImage(named: "triangle"), forSegmentAtIndex: 2)
+        for i in 0...shapeSelector.subviews.count-1{
+            segments.append(shapeSelector.subviews[i])
+        }
+        shapeSelector.selectedSegmentIndex = types.indexOf(shapeType ?? "rectangle") ?? 0//default: select rectangle
+        segments[shapeSelector.selectedSegmentIndex].tintColor = colorGreyLight
         shapeSelector.contentMode = UIViewContentMode.ScaleAspectFit
         drawToolbar.addSubview(shapeSelector)
         
@@ -287,6 +292,8 @@ class DrawViewController: UIViewController {
                 let type = ["rectangle", "circle", "triangle"]
                 let i = Int(arc4random_uniform(UInt32(type.count)))
                 shapeType = type[i]
+                shapeSelector.selectedSegmentIndex = i
+                self.selectShape(shapeSelector)
                 width = Int(arc4random_uniform(UInt32(widthSlider.maximumValue)) + 1)
                 height = Int(arc4random_uniform(UInt32(heightSlider.maximumValue)) + 1)
                 //update slider & sliders' label
@@ -571,27 +578,21 @@ class DrawViewController: UIViewController {
     }
     
     func selectShape(sender: UISegmentedControl){
-        switch sender.selectedSegmentIndex{
-        case 0: //rectangle
+        let i = sender.selectedSegmentIndex
+        for s in segments{
+            s.tintColor = colorGreyDark
+        }
+        segments[i].tintColor = colorGreyLight
+        
+        switch i{
+        case 0:
             shapeType = "rectangle"
-            (sender.subviews[0] as UIView).tintColor = colorGreyLight
-            (sender.subviews[1] as UIView).tintColor = colorGreyDark
-            (sender.subviews[2] as UIView).tintColor = colorGreyDark
-        case 1: //circle
+        case 1:
             shapeType = "circle"
-            (sender.subviews[0] as UIView).tintColor = colorGreyDark
-            (sender.subviews[1] as UIView).tintColor = colorGreyLight
-            (sender.subviews[2] as UIView).tintColor = colorGreyDark
-        case 2: //triangle
+        case 2:
             shapeType = "triangle"
-            (sender.subviews[0] as UIView).tintColor = colorGreyDark
-            (sender.subviews[1] as UIView).tintColor = colorGreyDark
-            (sender.subviews[2] as UIView).tintColor = colorGreyLight
         default:
             shapeType = "rectangle"
-            (sender.subviews[0] as UIView).tintColor = colorGreyLight
-            (sender.subviews[1] as UIView).tintColor = colorGreyDark
-            (sender.subviews[2] as UIView).tintColor = colorGreyDark
         }
     }
     

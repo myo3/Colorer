@@ -7,23 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DD27B22B1C2115240094E219 /* DrawViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD27B22A1C2115240094E219 /* DrawViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		DD70CC9C1C20B53E00736426 /* ColorSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD70CC9B1C20B53E00736426 /* ColorSlider.swift */; settings = {ASSET_TAGS = (); }; };
-		DD7FDFF51C20DB5200F0AEFD /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7FDFF41C20DB5200F0AEFD /* StartViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		DD27B22B1C2115240094E219 /* DrawViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD27B22A1C2115240094E219 /* DrawViewController.swift */; };
+		DD70CC9C1C20B53E00736426 /* ColorSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD70CC9B1C20B53E00736426 /* ColorSlider.swift */; };
+		DD7FDFF51C20DB5200F0AEFD /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7FDFF41C20DB5200F0AEFD /* StartViewController.swift */; };
 		DD981ED31C206CE700511055 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD981ED21C206CE700511055 /* AppDelegate.swift */; };
 		DD981EDA1C206CE700511055 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD981ED91C206CE700511055 /* Assets.xcassets */; };
 		DD981EDD1C206CE700511055 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD981EDB1C206CE700511055 /* LaunchScreen.storyboard */; };
 		DD981EE81C206CE700511055 /* P3_ColorerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD981EE71C206CE700511055 /* P3_ColorerTests.swift */; };
 		DD981EF31C206CE700511055 /* P3_ColorerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD981EF21C206CE700511055 /* P3_ColorerUITests.swift */; };
-		DD981F021C206CFE00511055 /* ArcaMajora-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = DD981F011C206CFE00511055 /* ArcaMajora-Heavy.otf */; settings = {ASSET_TAGS = (); }; };
-		DD981F041C206D0600511055 /* Dense-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = DD981F031C206D0600511055 /* Dense-Regular.otf */; settings = {ASSET_TAGS = (); }; };
-		DD981F061C206D1100511055 /* Bavro-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = DD981F051C206D1100511055 /* Bavro-Regular.otf */; settings = {ASSET_TAGS = (); }; };
-		DD981F081C206D1900511055 /* Infinity.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD981F071C206D1900511055 /* Infinity.ttf */; settings = {ASSET_TAGS = (); }; };
-		DD981F201C206ECB00511055 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD981F1B1C206ECB00511055 /* Main.storyboard */; settings = {ASSET_TAGS = (); }; };
-		DD981F211C206ECB00511055 /* RandomBackgroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD981F1C1C206ECB00511055 /* RandomBackgroundViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		DD981F221C206ECB00511055 /* ShapeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD981F1D1C206ECB00511055 /* ShapeViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		DD981F231C206ECB00511055 /* TriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD981F1E1C206ECB00511055 /* TriangleView.swift */; settings = {ASSET_TAGS = (); }; };
-		DD981F241C206ECB00511055 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD981F1F1C206ECB00511055 /* ViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		DD981F021C206CFE00511055 /* ArcaMajora-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = DD981F011C206CFE00511055 /* ArcaMajora-Heavy.otf */; };
+		DD981F041C206D0600511055 /* Dense-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = DD981F031C206D0600511055 /* Dense-Regular.otf */; };
+		DD981F061C206D1100511055 /* Bavro-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = DD981F051C206D1100511055 /* Bavro-Regular.otf */; };
+		DD981F081C206D1900511055 /* Infinity.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD981F071C206D1900511055 /* Infinity.ttf */; };
+		DD981F201C206ECB00511055 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD981F1B1C206ECB00511055 /* Main.storyboard */; };
+		DD981F211C206ECB00511055 /* RandomBackgroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD981F1C1C206ECB00511055 /* RandomBackgroundViewController.swift */; };
+		DD981F221C206ECB00511055 /* ShapeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD981F1D1C206ECB00511055 /* ShapeViewController.swift */; };
+		DD981F231C206ECB00511055 /* TriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD981F1E1C206ECB00511055 /* TriangleView.swift */; };
+		DD981F241C206ECB00511055 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD981F1F1C206ECB00511055 /* ViewController.swift */; };
+		DDC03F3A1C33C74F00263999 /* OvalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC03F391C33C74F00263999 /* OvalView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		DD981F1D1C206ECB00511055 /* ShapeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeViewController.swift; sourceTree = "<group>"; };
 		DD981F1E1C206ECB00511055 /* TriangleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriangleView.swift; sourceTree = "<group>"; };
 		DD981F1F1C206ECB00511055 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		DDC03F391C33C74F00263999 /* OvalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OvalView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +126,7 @@
 				DD981F1C1C206ECB00511055 /* RandomBackgroundViewController.swift */,
 				DD981F1D1C206ECB00511055 /* ShapeViewController.swift */,
 				DD981F1E1C206ECB00511055 /* TriangleView.swift */,
+				DDC03F391C33C74F00263999 /* OvalView.swift */,
 				DD981F1F1C206ECB00511055 /* ViewController.swift */,
 				DD981ED21C206CE700511055 /* AppDelegate.swift */,
 				DD981ED91C206CE700511055 /* Assets.xcassets */,
@@ -302,6 +305,7 @@
 			files = (
 				DD27B22B1C2115240094E219 /* DrawViewController.swift in Sources */,
 				DD981F241C206ECB00511055 /* ViewController.swift in Sources */,
+				DDC03F3A1C33C74F00263999 /* OvalView.swift in Sources */,
 				DD7FDFF51C20DB5200F0AEFD /* StartViewController.swift in Sources */,
 				DD981ED31C206CE700511055 /* AppDelegate.swift in Sources */,
 				DD981F221C206ECB00511055 /* ShapeViewController.swift in Sources */,
@@ -439,6 +443,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "P3 Colorer/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Monica-Ong.P3-Colorer";
@@ -450,6 +455,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "P3 Colorer/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Monica-Ong.P3-Colorer";

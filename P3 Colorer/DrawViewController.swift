@@ -8,29 +8,50 @@
 
 import UIKit
 
+extension UISegmentedControl {
+    func removeBorders() {
+        setBackgroundImage(imageWithColor(UIColor.clearColor()), forState: .Normal, barMetrics: .Default)
+        setBackgroundImage(imageWithColor(UIColor.clearColor()), forState: .Selected, barMetrics: .Default)
+        setDividerImage(imageWithColor(UIColor.clearColor()), forLeftSegmentState: .Normal, rightSegmentState: .Normal, barMetrics: .Default)
+    }
+    
+    // create a 1x1 image with this color
+    private func imageWithColor(color: UIColor) -> UIImage {
+        let rect = CGRectMake(0.0, 0.0, 1.0, 1.0)
+        UIGraphicsBeginImageContext(rect.size)
+        let context = UIGraphicsGetCurrentContext()
+        CGContextSetFillColorWithColor(context, color.CGColor);
+        CGContextFillRect(context, rect);
+        let image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        return image
+    }
+}
+
 class DrawViewController: UIViewController {
     var selected: String?
     
+    var colorGreyLight: UIColor = UIColor(red:0.91, green:0.91, blue:0.91, alpha:1.0)
+    var colorGreyDark: UIColor = UIColor(red:0.21, green:0.22, blue:0.22, alpha:1.0)
+    
     var canvas: UIView = UIView()
-    var shape: String?
-    var shapeColor: UIColor?
-    var fontColor: UIColor = UIColor(red:0.91, green:0.91, blue:0.91, alpha:1.0)
+    var shapeType: String?
+    var shapeColor: UIColor = UIColor(red:0.21, green:0.22, blue:0.22, alpha:1.0) //colorGreyDark
     var height: Int = 60
     var width: Int = 60
     var shapesOnCanvas: Set<UIView> = Set<UIView>()
     var shapeView: UIView = UIView()
     
     var toolbar: UIToolbar = UIToolbar()
-    var barButtonColor: UIColor?
     var drawBarButton = UIBarButtonItem()
     var eraseBarButton = UIBarButtonItem()
-    var editBarButton = UIBarButtonItem()
+    var colorBarButton = UIBarButtonItem()
     var hideBarButton = UIBarButtonItem()
 
+    var randomMode: Bool = false
     var drawMode: Bool = false
     var eraseMode: Bool = false
     var colorMode: Bool = false
-    var editMode: Bool = false
     var hiddenMode: Bool = false
     var toolbarExpanded: Bool = false
     
@@ -40,7 +61,7 @@ class DrawViewController: UIViewController {
     var heightValueLabel: UILabel = UILabel()
     var widthValueLabel: UILabel = UILabel()
     
-    var editToolbar: UIView = UIView()
+    var colorToolbar: UIView = UIView()
     var colorSlider: ColorSlider = ColorSlider()
     var newColorPreview: UIImageView = UIImageView()
     var curColorPreview: UIImageView = UIImageView()
@@ -56,24 +77,25 @@ class DrawViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        //create bar buttons
+        
+        //set up bar buttons
         let backBarButton = UIBarButtonItem(image: UIImage(named: "blackBack"), style: .Plain, target: self, action: "returnHome:")
-        backBarButton.tintColor = barButtonColor
+        backBarButton.tintColor = colorGreyDark
         let deleteBarButton = UIBarButtonItem(image: UIImage(named: "greyDelete"), style: .Plain, target: self, action: "deleteView:")
-        deleteBarButton.tintColor = barButtonColor
+        deleteBarButton.tintColor = colorGreyDark
         drawBarButton = UIBarButtonItem(image: UIImage(named: "greyDraw"), style: .Plain, target: self, action: "draw:")
-        drawBarButton.tintColor = barButtonColor
+        drawBarButton.tintColor = colorGreyDark
         eraseBarButton = UIBarButtonItem(image: UIImage(named: "greyErase"), style: .Plain, target: self, action: "erase:")
-        eraseBarButton.tintColor = barButtonColor
-        editBarButton = UIBarButtonItem(image: UIImage(named: "greyResize"), style: .Plain, target: self, action: "edit:")
-        editBarButton.tintColor = barButtonColor
+        eraseBarButton.tintColor = colorGreyDark
+        colorBarButton = UIBarButtonItem(image: UIImage(named: "greyColor"), style: .Plain, target: self, action: "color:")
+        colorBarButton.tintColor = colorGreyDark
         hideBarButton = UIBarButtonItem(image: UIImage(named: "greyView"), style: .Plain, target: self, action: "view:")
-        hideBarButton.tintColor = barButtonColor
+        hideBarButton.tintColor = colorGreyDark
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem:
             .FlexibleSpace, target: self, action: nil)
         
         //set up toolbar
-        let toolbarItems = [backBarButton, flexibleSpace, drawBarButton, flexibleSpace, eraseBarButton, flexibleSpace, editBarButton, flexibleSpace, hideBarButton, flexibleSpace, deleteBarButton]
+        let toolbarItems = [backBarButton, flexibleSpace, drawBarButton, flexibleSpace, eraseBarButton, flexibleSpace, colorBarButton, flexibleSpace, hideBarButton, flexibleSpace, deleteBarButton]
         toolbar.sizeToFit()
         toolbar.frame = CGRectMake(0, view.bounds.height-toolbar.bounds.height, toolbar.bounds.height, toolbar.bounds.height)
         toolbar.sizeToFit()
@@ -87,6 +109,14 @@ class DrawViewController: UIViewController {
         canvas = UIView(frame: CGRectMake(0, 0, view.bounds.height, view.bounds.height-toolbar.bounds.height))
         self.view.insertSubview(canvas, belowSubview: toolbar)
         
+        //set up swiper
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: "presentToolbar:")
+        swipeUp.direction = .Up
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: "dismissToolbar:")
+        swipeDown.direction = .Down
+        canvas.addGestureRecognizer(swipeUp)
+        canvas.addGestureRecognizer(swipeDown)
+        
         //set up draw toolbar
         drawToolbar = UIView(frame: CGRectMake(0, view.bounds.height, view.bounds.width, view.bounds.height/6))
         drawToolbar.layer.contents = UIImage(named: "\(selected!)SizeToolbar")!.CGImage
@@ -98,19 +128,26 @@ class DrawViewController: UIViewController {
         let labelWidth = CGFloat(80)
         let labelHeight = CGFloat(21)
         let valueLabelWidth = CGFloat(43)
-
+        
+        let shapeTypeLabel = UILabel(frame: CGRectMake(sliderSpace, 0, labelWidth, labelHeight))
         let heightLabel = UILabel(frame: CGRectMake(sliderSpace, 0, labelWidth, labelHeight))
         let widthLabel = UILabel(frame: CGRectMake(sliderSpace, 0, labelWidth, labelHeight))
+        shapeTypeLabel.center.y = sliderCenterY
         heightLabel.center.y = sliderCenterY*3
         widthLabel.center.y = sliderCenterY*5
+        shapeTypeLabel.textAlignment = NSTextAlignment.Right
         heightLabel.textAlignment = NSTextAlignment.Right
         widthLabel.textAlignment = NSTextAlignment.Right
-        heightLabel.textColor = barButtonColor
-        widthLabel.textColor = barButtonColor
+        shapeTypeLabel.textColor = colorGreyDark
+        heightLabel.textColor = colorGreyDark
+        widthLabel.textColor = colorGreyDark
+        shapeTypeLabel.font = UIFont(name: "ArcaMajora-Heavy", size: 18)
         heightLabel.font = UIFont(name: "ArcaMajora-Heavy", size: 18)
         widthLabel.font = UIFont(name: "ArcaMajora-Heavy", size: 18)
+        shapeTypeLabel.text = "SHAPE"
         heightLabel.text = "HEIGHT"
         widthLabel.text = "WIDTH"
+        drawToolbar.addSubview(shapeTypeLabel)
         drawToolbar.addSubview(heightLabel)
         drawToolbar.addSubview(widthLabel)
         
@@ -119,27 +156,26 @@ class DrawViewController: UIViewController {
         let sliderHeight = CGFloat(31)
         heightSlider = UISlider(frame: CGRectMake(heightLabel.frame.maxX + sliderSpace, 0, sliderWidth, sliderHeight))
         widthSlider = UISlider(frame: CGRectMake(widthLabel.frame.maxX + sliderSpace, 0, sliderWidth, sliderHeight))
-        heightSlider.maximumValue = 100
-        widthSlider.maximumValue = 100
+        heightSlider.center.y = heightLabel.center.y
+        widthSlider.center.y = widthLabel.center.y
+        heightSlider.minimumValue = 1
+        widthSlider.minimumValue = 1
+        heightSlider.maximumValue = 200
+        widthSlider.maximumValue = 200
         heightSlider.value = Float(height)
         widthSlider.value = Float(width)
         heightSlider.addTarget(self, action: "sliderValueChanged:", forControlEvents: .ValueChanged)
         widthSlider.addTarget(self, action: "sliderValueChanged:", forControlEvents: .ValueChanged)
         heightSlider.tag = 1
         widthSlider.tag = 2
-        heightSlider.center.y = heightLabel.center.y
-        widthSlider.center.y = widthLabel.center.y
-        heightSlider.minimumTrackTintColor = barButtonColor
-        widthSlider.minimumTrackTintColor = barButtonColor
-        heightSlider.maximumTrackTintColor = fontColor
-        widthSlider.maximumTrackTintColor = fontColor
+        heightSlider.minimumTrackTintColor = colorGreyDark
+        widthSlider.minimumTrackTintColor = colorGreyDark
+        heightSlider.maximumTrackTintColor = colorGreyLight
+        widthSlider.maximumTrackTintColor = colorGreyLight
         heightSlider.setThumbImage(UIImage(named: "\(selected!)SliderThumbHeight")!, forState: .Normal)
         widthSlider.setThumbImage(UIImage(named: "\(selected!)SliderThumbWidth")!, forState: .Normal)
         drawToolbar.addSubview(heightSlider)
         drawToolbar.addSubview(widthSlider)
-        let swipeUp = UISwipeGestureRecognizer(target: self, action: "dismissToolbar:")
-        swipeUp.direction = .Up
-        toolbar.addGestureRecognizer(swipeUp)
         
         //set up slider value labels
         heightValueLabel = UILabel(frame: CGRectMake(heightSlider.frame.maxX + sliderSpace, 0, valueLabelWidth, labelHeight))
@@ -148,8 +184,8 @@ class DrawViewController: UIViewController {
         widthValueLabel.center.y = widthLabel.center.y
         heightValueLabel.textAlignment = NSTextAlignment.Left
         widthValueLabel.textAlignment = NSTextAlignment.Left
-        heightValueLabel.textColor = barButtonColor
-        widthValueLabel.textColor = barButtonColor
+        heightValueLabel.textColor = colorGreyDark
+        widthValueLabel.textColor = colorGreyDark
         heightValueLabel.font = UIFont(name: "ArcaMajora-Heavy", size: 18)
         widthValueLabel.font = UIFont(name: "ArcaMajora-Heavy", size: 18)
         heightValueLabel.text = "\(height)"
@@ -157,24 +193,50 @@ class DrawViewController: UIViewController {
         drawToolbar.addSubview(heightValueLabel)
         drawToolbar.addSubview(widthValueLabel)
         
-        //set up edit toolbar
-        editToolbar = UIView(frame: CGRectMake(0, view.bounds.height, view.bounds.width, view.bounds.height/6))
-        editToolbar.layer.contents = UIImage(named: "\(selected!)SizeToolbar")!.CGImage
-        self.view.addSubview(editToolbar)
-            //set up color slider
+        //set up shape selector
+        let types = ["rectangle", "circle", "triangle"]
+        let shapeSelector = UISegmentedControl(items: types)
+        shapeSelector.frame = CGRectMake(shapeTypeLabel.frame.maxX + sliderSpace, 0, sliderHeight*3 + 30, sliderHeight)
+        shapeSelector.center.y = shapeTypeLabel.center.y
+        shapeSelector.tintColor = colorGreyDark
+        shapeSelector.removeBorders()
+        shapeSelector.selectedSegmentIndex = 0 //default: select rectangle
+        (shapeSelector.subviews[0] as UIView).tintColor = colorGreyLight
+        shapeSelector.addTarget(self, action: "selectShape:", forControlEvents: .ValueChanged)
+        shapeSelector.setImage(UIImage(named: "rectangle"), forSegmentAtIndex: 0)
+        shapeSelector.setImage(UIImage(named: "circle"), forSegmentAtIndex: 1)
+        shapeSelector.setImage(UIImage(named: "triangle"), forSegmentAtIndex: 2)
+        shapeSelector.contentMode = UIViewContentMode.ScaleAspectFit
+        drawToolbar.addSubview(shapeSelector)
+        
+        //set up random button
+        let randomButton = UIButton(frame: CGRectMake(heightSlider.frame.maxX + sliderSpace, 0, sliderHeight, sliderHeight))
+        randomButton.center.y = shapeSelector.center.y
+        let image = UIImage(named: "randomize")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+        randomButton.setImage(image, forState: UIControlState.Normal)
+        randomButton.tintColor = colorGreyDark
+        randomButton.addTarget(self, action: "randomize:", forControlEvents: .TouchUpInside)
+        drawToolbar.addSubview(randomButton)
+        
+        //set up color toolbar
+        colorToolbar = UIView(frame: CGRectMake(0, view.bounds.height, view.bounds.width, view.bounds.height/6))
+        colorToolbar.layer.contents = UIImage(named: "\(selected!)SizeToolbar")!.CGImage
+        self.view.addSubview(colorToolbar)
+        
+        //set up color slider
         colorSlider = ColorSlider(frame: CGRectMake(0, 0, view.bounds.width, sliderHeight))
-        colorSlider.center = CGPoint(x: editToolbar.bounds.width/2, y: editToolbar.bounds.height*0.75)
+        colorSlider.center = CGPoint(x: colorToolbar.bounds.width/2, y: colorToolbar.bounds.height*0.75)
         colorSlider.orientation = ColorSliderOrientation.Horizontal
-        colorSlider.borderColor = barButtonColor!
+        colorSlider.borderColor = colorGreyDark
         colorSlider.addTarget(self, action: "willChangeColor:", forControlEvents: .TouchDown)
         colorSlider.addTarget(self, action: "isChangingColor:", forControlEvents: .ValueChanged)
         colorSlider.addTarget(self, action: "didChangeColor:", forControlEvents: .TouchUpOutside)
         colorSlider.addTarget(self, action: "didChangeColor:", forControlEvents: .TouchUpInside)
-        editToolbar.addSubview(colorSlider)
+        colorToolbar.addSubview(colorSlider)
             //set up color preview
-        let colorPreviewSize = editToolbar.bounds.height*0.4
-        newColorPreview = UIImageView(frame: CGRectMake(editToolbar.bounds.width/2 - colorPreviewSize/2, 0, colorPreviewSize/2, colorPreviewSize))
-        curColorPreview = UIImageView(frame: CGRectMake(editToolbar.bounds.width/2, 0, colorPreviewSize/2, colorPreviewSize))
+        let colorPreviewSize = colorToolbar.bounds.height*0.4
+        newColorPreview = UIImageView(frame: CGRectMake(colorToolbar.bounds.width/2 - colorPreviewSize/2, 0, colorPreviewSize/2, colorPreviewSize))
+        curColorPreview = UIImageView(frame: CGRectMake(colorToolbar.bounds.width/2, 0, colorPreviewSize/2, colorPreviewSize))
         newColorPreview.center.y = colorSlider.frame.minY/2
         curColorPreview.center.y = colorSlider.frame.minY/2
         newColorPreview.image = UIImage(named: "blackColorLeft")
@@ -185,13 +247,13 @@ class DrawViewController: UIViewController {
         curColorPreview.tintColor = shapeColor
         newColorPreview.contentMode = UIViewContentMode.ScaleAspectFit
         curColorPreview.contentMode = UIViewContentMode.ScaleAspectFit
-        editToolbar.addSubview(newColorPreview)
-        editToolbar.addSubview(curColorPreview)
+        colorToolbar.addSubview(newColorPreview)
+        colorToolbar.addSubview(curColorPreview)
         
         //set up corners: set color, add pan feature, count = 9
         for i in 0...8 {
-            let corner = UIImageView(frame: CGRectMake(0, 0, 10, 10))
-            corner.backgroundColor = fontColor
+            let corner = UIImageView(frame: CGRectMake(0, 0, 17, 17))
+            corner.backgroundColor = colorGreyLight
             corners.append(corner)
             corner.tag = i
             corner.userInteractionEnabled = true
@@ -216,21 +278,49 @@ class DrawViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    //Draw on canvas
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        if !eraseMode && !hiddenMode && drawMode{ //eraseMode off, not hidden, draw on
-            let location = touches.first!.locationInView(view)
+        let location = touches.first!.locationInView(view)
+        if drawMode{
             //create shape
-            if shape == "triangle"{
+            if randomMode{
+                let type = ["rectangle", "circle", "triangle"]
+                let i = Int(arc4random_uniform(UInt32(type.count)))
+                shapeType = type[i]
+                width = Int(arc4random_uniform(UInt32(widthSlider.maximumValue)) + 1)
+                height = Int(arc4random_uniform(UInt32(heightSlider.maximumValue)) + 1)
+                //update slider & sliders' label
+                widthSlider.value = Float(width)
+                heightSlider.value = Float(height)
+                widthValueLabel.text = "\(width)"
+                heightValueLabel.text = "\(height)"
+            }
+            if shapeType == "triangle"{
                 shapeView = TriangleView(frame: CGRect(x: 0, y: 0, width: width, height: height))
                 
             }
-            else if shape == "rectangle"{
+            else if shapeType == "rectangle"{
                 shapeView = UIView(frame: CGRect(x: 0, y: 0, width: width, height: height))
-                shapeView.layer.cornerRadius = 10 //CGFloat(width)/2.0 //circle
+                shapeView.layer.cornerRadius = 10
+            }
+            else if shapeType == "circle" {
+                if width != height { //oval
+                    shapeView = OvalView(frame: CGRect(x: 0, y: 0, width: width, height: height))
+                } else{ //circle
+                    shapeView = UIView(frame: CGRect(x: 0, y: 0, width: width, height: height))
+                    shapeView.layer.cornerRadius = (CGFloat(width))/2.0
+                }
             }
             //place shape where user touched
             shapeView.center = location
             //set shape color
+            if randomMode{
+                shapeColor = UIColor(red: CGFloat(arc4random()) / CGFloat(UINT32_MAX), green: CGFloat(arc4random()) / CGFloat(UINT32_MAX), blue: CGFloat(arc4random()) / CGFloat(UINT32_MAX), alpha: 1)
+                colorBarButton.tintColor = shapeColor
+                //reset color previewer colors
+                curColorPreview.tintColor = shapeColor
+                newColorPreview.tintColor = shapeColor
+            }
             shapeView.backgroundColor = shapeColor
             //add gesture recognizers
             let tap = UITapGestureRecognizer(target: self, action: "tapShape:")
@@ -251,15 +341,27 @@ class DrawViewController: UIViewController {
         let corner = sender.view!
         let trans = sender.translationInView(canvas)
         corner.center = CGPoint(x: corner.center.x + trans.x, y: corner.center.y + trans.y)
+        if let shape = selectedShape{
+            corners = placeCorners(corners, selectedShape: shape)
+        }
         sender.setTranslation(CGPointZero, inView: canvas)
+    }
+    
+    func deselectShape(){
+        if let _ = selectedShape{
+            for corner in corners{
+                corner.removeFromSuperview()
+            }
+            selectedShape = nil
+        }
     }
     
     func tapToRotate(sender: UITapGestureRecognizer){
         //if there is a selectedShape
-        if let shapeView = selectedShape{
+        if let shape = selectedShape{
             let rotation = CGFloat(M_PI/2)
-            shapeView.transform = CGAffineTransformRotate(shapeView.transform, rotation)
-            corners = placeCorners(corners, selectedShape: shapeView)
+            shape.transform = CGAffineTransformRotate(shape.transform, rotation)
+            corners = placeCorners(corners, selectedShape: shape)
             
         }
     }
@@ -267,20 +369,23 @@ class DrawViewController: UIViewController {
     func tapShape(sender: UITapGestureRecognizer){
         selectedShape = sender.view!
         
-        if editMode{
-            //place each corner in view
-            for corner in corners {
-                self.view.insertSubview(corner, aboveSubview: selectedShape!)
-            }
-            
-            //place each corner in proper place
-            corners = placeCorners(corners, selectedShape: selectedShape!)
-        }
-        
         if eraseMode{
             if shapesOnCanvas.contains(selectedShape!) {
                 shapesOnCanvas.remove(selectedShape!)
                 selectedShape!.removeFromSuperview()
+            }
+        }else if !drawMode{ //if not drawing, place resize grid on tapped shape
+            //place each corner in view
+            for corner in corners {
+//                self.view.insertSubview(corner, aboveSubview: selectedShape!)
+                self.view.insertSubview(corner, belowSubview: toolbar)
+            }
+            
+            //place each corner in proper place
+            corners = placeCorners(corners, selectedShape: selectedShape!)
+            
+            if colorMode{
+                selectedShape?.backgroundColor = shapeColor
             }
         }
     }
@@ -368,7 +473,7 @@ class DrawViewController: UIViewController {
             for c in corners{
                 //set panned corner back to grey square
                 if c.tag == corner.tag{
-                    corner.backgroundColor = fontColor
+                    corner.backgroundColor = colorGreyLight
                     corner.image = nil
                     continue
                 }
@@ -441,22 +546,22 @@ class DrawViewController: UIViewController {
             if eraseMode{
                 UIApplication.sharedApplication().sendAction(eraseBarButton.action, to: eraseBarButton.target, from: self, forEvent: nil)
             }
-            if editMode{
-                UIApplication.sharedApplication().sendAction(editBarButton.action, to: editBarButton.target, from: self, forEvent: nil)
+            if colorMode{
+                UIApplication.sharedApplication().sendAction(colorBarButton.action, to: colorBarButton.target, from: self, forEvent: nil)
             }
             if hiddenMode{
                 UIApplication.sharedApplication().sendAction(hideBarButton.action, to: hideBarButton.target, from: self, forEvent: nil)
             }
-            
+            deselectShape()
             //draw mode stuff
-            drawBarButton.tintColor = fontColor
+            drawBarButton.tintColor = colorGreyLight
             toolbarExpanded = true
             UIView.animateWithDuration(0.5, animations: {
                 self.drawToolbar.center.y = self.view.bounds.height - self.drawToolbar.bounds.height/2
                 self.toolbar.center.y = self.drawToolbar.center.y - self.drawToolbar.bounds.height/2 - self.toolbar.bounds.height/2
             })
         } else{
-            drawBarButton.tintColor = barButtonColor
+            drawBarButton.tintColor = colorGreyDark
             toolbarExpanded = false
             UIView.animateWithDuration(0.5, animations: {
                 self.drawToolbar.center.y = self.view.bounds.height + self.drawToolbar.bounds.height/2
@@ -465,42 +570,44 @@ class DrawViewController: UIViewController {
         }
     }
     
-    func dismissToolbar(gestureRecognizer: UISwipeGestureRecognizer) {
-        toolbarExpanded = !toolbarExpanded
-        if toolbarExpanded{
-            if drawMode{ //present drawToolbar
-                UIView.animateWithDuration(0.5, animations: {
-                    self.drawToolbar.center.y = self.view.bounds.height - self.drawToolbar.bounds.height/2
-                    self.toolbar.center.y = self.drawToolbar.center.y - self.drawToolbar.bounds.height/2 - self.toolbar.bounds.height/2
-                })
-            }
-            if editMode{ //present editToolbar
-                UIView.animateWithDuration(0.5, animations: {
-                    self.editToolbar.center.y = self.view.bounds.height - self.editToolbar.bounds.height/2
-                    self.toolbar.center.y = self.editToolbar.center.y - self.editToolbar.bounds.height/2 - self.toolbar.bounds.height/2
-                })
-            }
-        }else{
-            if drawMode{
-                UIView.animateWithDuration(0.5, animations: {
-                    self.drawToolbar.center.y = self.view.bounds.height + self.drawToolbar.bounds.height/2
-                    self.toolbar.center.y = self.view.bounds.height - self.toolbar.bounds.height/2
-                })
-            }
-            if editMode{
-                UIView.animateWithDuration(0.5, animations: {
-                    self.editToolbar.center.y = self.view.bounds.height + self.editToolbar.bounds.height/2
-                    self.toolbar.center.y = self.view.bounds.height - self.toolbar.bounds.height/2
-                })
-            }
-            
+    func selectShape(sender: UISegmentedControl){
+        switch sender.selectedSegmentIndex{
+        case 0: //rectangle
+            shapeType = "rectangle"
+            (sender.subviews[0] as UIView).tintColor = colorGreyLight
+            (sender.subviews[1] as UIView).tintColor = colorGreyDark
+            (sender.subviews[2] as UIView).tintColor = colorGreyDark
+        case 1: //circle
+            shapeType = "circle"
+            (sender.subviews[0] as UIView).tintColor = colorGreyDark
+            (sender.subviews[1] as UIView).tintColor = colorGreyLight
+            (sender.subviews[2] as UIView).tintColor = colorGreyDark
+        case 2: //triangle
+            shapeType = "triangle"
+            (sender.subviews[0] as UIView).tintColor = colorGreyDark
+            (sender.subviews[1] as UIView).tintColor = colorGreyDark
+            (sender.subviews[2] as UIView).tintColor = colorGreyLight
+        default:
+            shapeType = "rectangle"
+            (sender.subviews[0] as UIView).tintColor = colorGreyLight
+            (sender.subviews[1] as UIView).tintColor = colorGreyDark
+            (sender.subviews[2] as UIView).tintColor = colorGreyDark
         }
     }
     
-    func edit(sender: UIBarButtonItem){
-        editMode = !editMode
+    func randomize(sender: UIButton){
+        randomMode = !randomMode
+        if randomMode{
+            sender.tintColor = colorGreyLight
+        } else{
+            sender.tintColor = colorGreyDark
+        }
+    }
+    
+    func color(sender: UIBarButtonItem){
+        colorMode = !colorMode
         
-        if editMode{
+        if colorMode{
             //turn off other buttons
             if eraseMode{
                 UIApplication.sharedApplication().sendAction(eraseBarButton.action, to: eraseBarButton.target, from: self, forEvent: nil)
@@ -513,23 +620,56 @@ class DrawViewController: UIViewController {
             }
             
             //edit mode stuff
-            editBarButton.tintColor = fontColor
+            colorBarButton.tintColor = colorGreyLight
             toolbarExpanded = true
             UIView.animateWithDuration(0.5, animations: {
-                self.editToolbar.center.y = self.view.bounds.height - self.editToolbar.bounds.height/2
-                self.toolbar.center.y = self.editToolbar.center.y - self.editToolbar.bounds.height/2 - self.toolbar.bounds.height/2
+                self.colorToolbar.center.y = self.view.bounds.height - self.colorToolbar.bounds.height/2
+                self.toolbar.center.y = self.colorToolbar.center.y - self.colorToolbar.bounds.height/2 - self.toolbar.bounds.height/2
             })
         } else{
-            editBarButton.tintColor = barButtonColor
+            colorBarButton.tintColor = shapeColor
             toolbarExpanded = false
             UIView.animateWithDuration(0.5, animations: {
-                self.editToolbar.center.y = self.view.bounds.height + self.editToolbar.bounds.height/2
+                self.colorToolbar.center.y = self.view.bounds.height + self.colorToolbar.bounds.height/2
                 self.toolbar.center.y = self.view.bounds.height - self.toolbar.bounds.height/2
             })
-            for corner in corners{
-                corner.removeFromSuperview()
+        }
+    }
+    
+    func dismissToolbar(gestureRecognizer: UISwipeGestureRecognizer) {
+        toolbarExpanded = !toolbarExpanded
+        if toolbarExpanded == false{
+            if drawMode{
+                UIView.animateWithDuration(0.5, animations: {
+                    self.drawToolbar.center.y = self.view.bounds.height + self.drawToolbar.bounds.height/2
+                    self.toolbar.center.y = self.view.bounds.height - self.toolbar.bounds.height/2
+                })
             }
-            selectedShape = nil
+            if colorMode{
+                UIView.animateWithDuration(0.5, animations: {
+                    self.colorToolbar.center.y = self.view.bounds.height + self.colorToolbar.bounds.height/2
+                    self.toolbar.center.y = self.view.bounds.height - self.toolbar.bounds.height/2
+                })
+            }
+            
+        }
+    }
+    
+    func presentToolbar(gestureRecognizer: UISwipeGestureRecognizer){
+        toolbarExpanded = !toolbarExpanded
+        if toolbarExpanded{
+            if drawMode{ //present drawToolbar
+                UIView.animateWithDuration(0.5, animations: {
+                    self.drawToolbar.center.y = self.view.bounds.height - self.drawToolbar.bounds.height/2
+                    self.toolbar.center.y = self.drawToolbar.center.y - self.drawToolbar.bounds.height/2 - self.toolbar.bounds.height/2
+                })
+            }
+            if colorMode{ //present editToolbar
+                UIView.animateWithDuration(0.5, animations: {
+                    self.colorToolbar.center.y = self.view.bounds.height - self.colorToolbar.bounds.height/2
+                    self.toolbar.center.y = self.colorToolbar.center.y - self.colorToolbar.bounds.height/2 - self.toolbar.bounds.height/2
+                })
+            }
         }
     }
     
@@ -538,8 +678,8 @@ class DrawViewController: UIViewController {
         
         if eraseMode{ //eraseMode on
             //turn off other buttons
-            if editMode{
-                UIApplication.sharedApplication().sendAction(editBarButton.action, to: editBarButton.target, from: self, forEvent: nil)
+            if colorMode{
+                UIApplication.sharedApplication().sendAction(colorBarButton.action, to: colorBarButton.target, from: self, forEvent: nil)
             }
             if drawMode{
                 UIApplication.sharedApplication().sendAction(drawBarButton.action, to: drawBarButton.target, from: self, forEvent: nil)
@@ -547,9 +687,12 @@ class DrawViewController: UIViewController {
             if hiddenMode{
                 UIApplication.sharedApplication().sendAction(hideBarButton.action, to: hideBarButton.target, from: self, forEvent: nil)
             }
-            eraseBarButton.tintColor = fontColor
+            deselectShape()
+            
+            //erase stuff
+            eraseBarButton.tintColor = colorGreyLight
         }else{ //eraseMode off
-            eraseBarButton.tintColor = barButtonColor
+            eraseBarButton.tintColor = colorGreyDark
         }
     }
     
@@ -558,8 +701,8 @@ class DrawViewController: UIViewController {
         
         if hiddenMode{
             //turn off other buttons
-            if editMode{
-                UIApplication.sharedApplication().sendAction(editBarButton.action, to: editBarButton.target, from: self, forEvent: nil)
+            if colorMode{
+                UIApplication.sharedApplication().sendAction(colorBarButton.action, to: colorBarButton.target, from: self, forEvent: nil)
             }
             if drawMode{
                 UIApplication.sharedApplication().sendAction(drawBarButton.action, to: drawBarButton.target, from: self, forEvent: nil)
@@ -567,21 +710,35 @@ class DrawViewController: UIViewController {
             if eraseMode{
                 UIApplication.sharedApplication().sendAction(eraseBarButton.action, to: eraseBarButton.target, from: self, forEvent: nil)
             }
+            deselectShape()
             
             //hidden mode stuff
             for rect in shapesOnCanvas{
                 rect.alpha = 0
             }
-            hideBarButton.tintColor = fontColor
+            hideBarButton.tintColor = colorGreyLight
         }else{
             for rect in shapesOnCanvas{
                 rect.alpha = 1
             }
-            hideBarButton.tintColor = barButtonColor
+            hideBarButton.tintColor = colorGreyDark
         }
     }
     
     func deleteView(sender: UIBarButtonItem) {
+        //turn off other buttons, except draw
+        if colorMode{
+            UIApplication.sharedApplication().sendAction(colorBarButton.action, to: colorBarButton.target, from: self, forEvent: nil)
+        }
+        if hiddenMode{
+            UIApplication.sharedApplication().sendAction(hideBarButton.action, to: hideBarButton.target, from: self, forEvent: nil)
+        }
+        if eraseMode{
+            UIApplication.sharedApplication().sendAction(eraseBarButton.action, to: eraseBarButton.target, from: self, forEvent: nil)
+        }
+        deselectShape()
+        
+        //delete everything
         for rect in shapesOnCanvas{
             rect.removeFromSuperview()
         }

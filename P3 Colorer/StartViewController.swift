@@ -41,9 +41,7 @@ class StartViewController: UIViewController {
     func createNew(sender: UIButton){
         let shapeVC = DrawViewController()
         shapeVC.selected = "random"
-        shapeVC.shape = "rectangle"
-        shapeVC.barButtonColor = UIColor(red:0.21, green:0.22, blue:0.22, alpha:1.0) //dark grey
-        shapeVC.shapeColor = shapeVC.barButtonColor
+        shapeVC.shapeType = "rectangle"
         shapeVC.view.backgroundColor = UIColor.whiteColor()
         self.navigationController?.pushViewController(shapeVC, animated: true)
         

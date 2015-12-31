@@ -286,58 +286,74 @@ class DrawViewController: UIViewController {
     //Draw on canvas
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         let location = touches.first!.locationInView(view)
+        
+        //only draw if in draw mode
         if drawMode{
-            //create shape
+            
+            //if random mode on, calcualte shapeType, width & height
+            var i = 0
             if randomMode{
                 let type = ["rectangle", "circle", "triangle"]
-                let i = Int(arc4random_uniform(UInt32(type.count)))
+                i = Int(arc4random_uniform(UInt32(type.count)))
                 shapeType = type[i]
-                shapeSelector.selectedSegmentIndex = i
-                self.selectShape(shapeSelector)
                 width = Int(arc4random_uniform(UInt32(widthSlider.maximumValue)) + 1)
                 height = Int(arc4random_uniform(UInt32(heightSlider.maximumValue)) + 1)
-                //update slider & sliders' label
-                widthSlider.value = Float(width)
-                heightSlider.value = Float(height)
-                widthValueLabel.text = "\(width)"
-                heightValueLabel.text = "\(height)"
             }
-            if shapeType == "triangle"{
-                shapeView = TriangleView(frame: CGRect(x: 0, y: 0, width: width, height: height))
-                
-            }
-            else if shapeType == "rectangle"{
+            
+            //create shape
+            switch shapeType!{
+            case "rectangle":
                 shapeView = UIView(frame: CGRect(x: 0, y: 0, width: width, height: height))
                 shapeView.layer.cornerRadius = 10
-            }
-            else if shapeType == "circle" {
+            case "circle":
                 if width != height { //oval
                     shapeView = OvalView(frame: CGRect(x: 0, y: 0, width: width, height: height))
                 } else{ //circle
                     shapeView = UIView(frame: CGRect(x: 0, y: 0, width: width, height: height))
                     shapeView.layer.cornerRadius = (CGFloat(width))/2.0
                 }
+            case "triangle":
+                shapeView = TriangleView(frame: CGRect(x: 0, y: 0, width: width, height: height))
+            default:
+                shapeView = UIView(frame: CGRect(x: 0, y: 0, width: width, height: height))
+                shapeView.layer.cornerRadius = 10
             }
+
             //place shape where user touched
             shapeView.center = location
-            //set shape color
-            if randomMode{
-                shapeColor = UIColor(red: CGFloat(arc4random()) / CGFloat(UINT32_MAX), green: CGFloat(arc4random()) / CGFloat(UINT32_MAX), blue: CGFloat(arc4random()) / CGFloat(UINT32_MAX), alpha: 1)
-                colorBarButton.tintColor = shapeColor
-                //reset color previewer colors
-                curColorPreview.tintColor = shapeColor
-                newColorPreview.tintColor = shapeColor
-            }
-            shapeView.backgroundColor = shapeColor
-            //add gesture recognizers
-            let tap = UITapGestureRecognizer(target: self, action: "tapShape:")
-            let pan = UIPanGestureRecognizer(target: self, action: "moveShape:")
-            shapeView.addGestureRecognizer(tap)
-            shapeView.addGestureRecognizer(pan)
-            //add shape to view
+            
+            //see if shape is placed in valid location
             if !CGRectIntersectsRect(shapeView.frame, drawToolbar.frame){
+                if randomMode{
+                    //calculate shape color
+                    shapeColor = UIColor(red: CGFloat(arc4random()) / CGFloat(UINT32_MAX), green: CGFloat(arc4random()) / CGFloat(UINT32_MAX), blue: CGFloat(arc4random()) / CGFloat(UINT32_MAX), alpha: 1)
+                    //update bar button to match new shape color
+                    colorBarButton.tintColor = shapeColor
+                    //update color previewer colors
+                    curColorPreview.tintColor = shapeColor
+                    newColorPreview.tintColor = shapeColor
+                    
+                    //update slider & sliders' label
+                    widthSlider.value = Float(width)
+                    heightSlider.value = Float(height)
+                    widthValueLabel.text = "\(width)"
+                    heightValueLabel.text = "\(height)"
+                    
+                    //update shape type
+                    shapeSelector.selectedSegmentIndex = i
+                    self.selectShape(shapeSelector)
+                }
+                //set shape color
+                shapeView.backgroundColor = shapeColor
+                
+                //add gesture recognizers
+                let tap = UITapGestureRecognizer(target: self, action: "tapShape:")
+                let pan = UIPanGestureRecognizer(target: self, action: "moveShape:")
+                shapeView.addGestureRecognizer(tap)
+                shapeView.addGestureRecognizer(pan)
+                
+                //add shape view
                 canvas.addSubview(shapeView)
-                //add shape to rectangles array
                 shapesOnCanvas.insert(shapeView)
             }
         }
@@ -704,9 +720,6 @@ class DrawViewController: UIViewController {
             //turn off other buttons
             if colorMode{
                 UIApplication.sharedApplication().sendAction(colorBarButton.action, to: colorBarButton.target, from: self, forEvent: nil)
-            }
-            if drawMode{
-                UIApplication.sharedApplication().sendAction(drawBarButton.action, to: drawBarButton.target, from: self, forEvent: nil)
             }
             if eraseMode{
                 UIApplication.sharedApplication().sendAction(eraseBarButton.action, to: eraseBarButton.target, from: self, forEvent: nil)

@@ -10,14 +10,17 @@ import UIKit
 
 class OvalView: UIView {
     
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
-    }
-    */
-    
+
+//    // Only override drawRect: if you perform custom drawing.
+//    // An empty implementation adversely affects performance during animation.
+//    override func drawRect(rect: CGRect) {
+//        // Drawing code
+//        
+//        //Mask
+//        let shapeLayer = CAShapeLayer()
+//        shapeLayer.path = CGPathCreateWithEllipseInRect(self.bounds, nil)
+//        self.layer.mask = shapeLayer
+//    }
     
     override func layoutSubviews() {
         super.layoutSubviews()

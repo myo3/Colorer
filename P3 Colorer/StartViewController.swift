@@ -34,10 +34,7 @@ class StartViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    override func viewDidAppear(animated: Bool) {
-    }
-    
+
     func createNew(sender: UIButton){
         let shapeVC = DrawViewController()
         shapeVC.selected = "random"
@@ -45,12 +42,6 @@ class StartViewController: UIViewController {
         shapeVC.view.backgroundColor = UIColor.whiteColor()
         self.navigationController?.pushViewController(shapeVC, animated: true)
         
-    }
-    
-    func randomButtonPressed(sender: UIButton!){
-        let randomVC = RandomBackgroundViewController()
-        self.navigationController?.pushViewController(randomVC, animated: true)
-        //self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     /*

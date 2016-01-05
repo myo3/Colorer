@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Social
 
 extension UISegmentedControl {
     func removeBorders() {
@@ -94,13 +95,11 @@ class DrawViewController: UIViewController {
         colorBarButton.tintColor = colorGreyDark
         hideBarButton = UIBarButtonItem(image: UIImage(named: "greyView"), style: .Plain, target: self, action: "view:")
         hideBarButton.tintColor = colorGreyDark
-        let saveBarButton = UIBarButtonItem(image: UIImage(named: "saveIcon"), style: .Plain, target: self, action: "save:")
-        saveBarButton.tintColor = colorGreyDark
         let flexibleSpace = UIBarButtonItem(barButtonSystemItem:
             .FlexibleSpace, target: self, action: nil)
         
         //set up toolbar
-        let toolbarItems = [backBarButton, flexibleSpace, drawBarButton, flexibleSpace, eraseBarButton, flexibleSpace, colorBarButton, flexibleSpace, hideBarButton, flexibleSpace, deleteBarButton, flexibleSpace, saveBarButton]
+        let toolbarItems = [backBarButton, flexibleSpace, drawBarButton, flexibleSpace, eraseBarButton, flexibleSpace, colorBarButton, flexibleSpace, hideBarButton, flexibleSpace, deleteBarButton]
         toolbar.sizeToFit()
         toolbar.frame = CGRectMake(0, view.bounds.height-toolbar.bounds.height, toolbar.bounds.height, toolbar.bounds.height)
         toolbar.sizeToFit()
@@ -117,10 +116,20 @@ class DrawViewController: UIViewController {
         //set up swiper
         let swipeUp = UISwipeGestureRecognizer(target: self, action: "presentToolbar:")
         swipeUp.direction = .Up
-        let swipeDown = UISwipeGestureRecognizer(target: self, action: "dismissToolbar:")
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: "dismissToolbar")
         swipeDown.direction = .Down
         canvas.addGestureRecognizer(swipeUp)
         canvas.addGestureRecognizer(swipeDown)
+        
+        //set up share button
+        let shareButton = UIButton(frame: CGRectMake(0, 0, 35, 35))
+        shareButton.setTitle("C", forState: .Normal)
+        shareButton.titleLabel?.font = UIFont(name: "ArcaMajora-Heavy", size: 40)
+        shareButton.titleLabel?.textAlignment = .Center
+        shareButton.setTitleColor(colorGreyDark, forState: .Normal)
+        shareButton.center = CGPoint(x: view.bounds.width/2, y: 5 + shareButton.bounds.height)
+        self.view.insertSubview(shareButton, aboveSubview: canvas)
+        shareButton.addTarget(self, action: "share:", forControlEvents: .TouchUpInside)
         
         //set up draw toolbar
         drawToolbar = UIView(frame: CGRectMake(0, view.bounds.height, view.bounds.width, view.bounds.height/6))
@@ -592,20 +601,20 @@ class DrawViewController: UIViewController {
     }
     
     //Toolbar functions
-    func save(sender: UIBarButtonItem) {
+    func share(sender: UIButton){
+        //dismiss toolbar if on
+        dismissToolbar()
         deselectShape()
+        
+        //generate snapshot
         let window: UIWindow! = UIApplication.sharedApplication().keyWindow
         let windowImage = capture(window)
-        UIImageWriteToSavedPhotosAlbum(windowImage
-            , nil, nil, nil)
-        sender.image = UIImage(named: "doneIcon")
-        sender.enabled = false
-        self.performSelector("canSaveAgain:", withObject: sender, afterDelay: 1.2)
-    }
-    
-    func canSaveAgain(sender: UIBarButtonItem){
-        sender.image = UIImage(named: "saveIcon")
-        sender.enabled = true
+        
+        //transition to ShareViewController
+        let shareVC = ShareViewController()
+        shareVC.drawVC = self
+        shareVC.masterpiece = windowImage
+        presentViewController(shareVC, animated: true, completion: nil)
     }
     
     func capture(window: UIWindow) -> UIImage{
@@ -708,7 +717,7 @@ class DrawViewController: UIViewController {
         }
     }
     
-    func dismissToolbar(gestureRecognizer: UISwipeGestureRecognizer) {
+    func dismissToolbar() {
         toolbarExpanded = !toolbarExpanded
         if toolbarExpanded == false{
             if drawMode{

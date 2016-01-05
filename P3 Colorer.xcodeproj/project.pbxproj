@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DD063CD61C3B715C004A7A43 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD063CD51C3B715C004A7A43 /* ShareViewController.swift */; };
+		DD063CD81C3B7589004A7A43 /* ShareTransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD063CD71C3B7589004A7A43 /* ShareTransitionManager.swift */; };
 		DD27B22B1C2115240094E219 /* DrawViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD27B22A1C2115240094E219 /* DrawViewController.swift */; };
 		DD70CC9C1C20B53E00736426 /* ColorSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD70CC9B1C20B53E00736426 /* ColorSlider.swift */; };
 		DD7FDFF51C20DB5200F0AEFD /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7FDFF41C20DB5200F0AEFD /* StartViewController.swift */; };
@@ -25,6 +27,7 @@
 		DD981F231C206ECB00511055 /* TriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD981F1E1C206ECB00511055 /* TriangleView.swift */; };
 		DD981F241C206ECB00511055 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD981F1F1C206ECB00511055 /* ViewController.swift */; };
 		DDC03F3A1C33C74F00263999 /* OvalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC03F391C33C74F00263999 /* OvalView.swift */; };
+		DDC695071C3B132400CC5342 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDC695061C3B132400CC5342 /* Social.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +48,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DD063CD51C3B715C004A7A43 /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		DD063CD71C3B7589004A7A43 /* ShareTransitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareTransitionManager.swift; sourceTree = "<group>"; };
 		DD27B22A1C2115240094E219 /* DrawViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawViewController.swift; sourceTree = "<group>"; };
 		DD70CC9B1C20B53E00736426 /* ColorSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorSlider.swift; sourceTree = "<group>"; };
 		DD7FDFF41C20DB5200F0AEFD /* StartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
@@ -69,6 +74,7 @@
 		DD981F1E1C206ECB00511055 /* TriangleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriangleView.swift; sourceTree = "<group>"; };
 		DD981F1F1C206ECB00511055 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		DDC03F391C33C74F00263999 /* OvalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OvalView.swift; sourceTree = "<group>"; };
+		DDC695061C3B132400CC5342 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DDC695071C3B132400CC5342 /* Social.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,6 +106,7 @@
 		DD981EC61C206CE700511055 = {
 			isa = PBXGroup;
 			children = (
+				DDC695061C3B132400CC5342 /* Social.framework */,
 				DD981F001C206CF300511055 /* Resources */,
 				DD981ED11C206CE700511055 /* P3 Colorer */,
 				DD981EE61C206CE700511055 /* P3 ColorerTests */,
@@ -123,6 +131,8 @@
 				DD981F1B1C206ECB00511055 /* Main.storyboard */,
 				DD7FDFF41C20DB5200F0AEFD /* StartViewController.swift */,
 				DD27B22A1C2115240094E219 /* DrawViewController.swift */,
+				DD063CD71C3B7589004A7A43 /* ShareTransitionManager.swift */,
+				DD063CD51C3B715C004A7A43 /* ShareViewController.swift */,
 				DD981F1C1C206ECB00511055 /* RandomBackgroundViewController.swift */,
 				DD981F1D1C206ECB00511055 /* ShapeViewController.swift */,
 				DD981F1E1C206ECB00511055 /* TriangleView.swift */,
@@ -304,7 +314,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD27B22B1C2115240094E219 /* DrawViewController.swift in Sources */,
+				DD063CD81C3B7589004A7A43 /* ShareTransitionManager.swift in Sources */,
 				DD981F241C206ECB00511055 /* ViewController.swift in Sources */,
+				DD063CD61C3B715C004A7A43 /* ShareViewController.swift in Sources */,
 				DDC03F3A1C33C74F00263999 /* OvalView.swift in Sources */,
 				DD7FDFF51C20DB5200F0AEFD /* StartViewController.swift in Sources */,
 				DD981ED31C206CE700511055 /* AppDelegate.swift in Sources */,

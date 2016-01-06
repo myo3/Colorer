@@ -72,6 +72,13 @@ class DrawViewController: UIViewController {
     
     var selectedShape: UIView?
     var corners: [UIImageView] = [UIImageView]()
+    let cornerSize = CGFloat(17)
+    let cornerButtonSpace = CGFloat(10)
+    
+    var shareTransitionManager = ShareTransitionManager()
+    var shareButton: UIButton = UIButton()
+    
+    
     // Symbols       Indexes/Tags
     //o---^---o     0---1---2
     //<---*--->     7---8---3
@@ -116,20 +123,25 @@ class DrawViewController: UIViewController {
         //set up swiper
         let swipeUp = UISwipeGestureRecognizer(target: self, action: "presentToolbar:")
         swipeUp.direction = .Up
+//        swipeUp.delaysTouchesBegan = true
         let swipeDown = UISwipeGestureRecognizer(target: self, action: "dismissToolbar")
         swipeDown.direction = .Down
+//        swipeDown.delaysTouchesBegan = true
         canvas.addGestureRecognizer(swipeUp)
         canvas.addGestureRecognizer(swipeDown)
         
         //set up share button
-        let shareButton = UIButton(frame: CGRectMake(0, 0, 35, 35))
+        shareButton = UIButton(frame: CGRectMake(0, 0, 40, 40))
         shareButton.setTitle("C", forState: .Normal)
         shareButton.titleLabel?.font = UIFont(name: "ArcaMajora-Heavy", size: 40)
         shareButton.titleLabel?.textAlignment = .Center
         shareButton.setTitleColor(colorGreyDark, forState: .Normal)
-        shareButton.center = CGPoint(x: view.bounds.width/2, y: 5 + shareButton.bounds.height)
+        shareButton.center = CGPoint(x: view.bounds.width/2, y: 40)
         self.view.insertSubview(shareButton, aboveSubview: canvas)
-        shareButton.addTarget(self, action: "share:", forControlEvents: .TouchUpInside)
+        shareButton.addTarget(self, action: "share", forControlEvents: .TouchUpInside)
+        let swipeToShare = UISwipeGestureRecognizer(target: self, action: "share")
+        swipeToShare.direction = .Down
+        shareButton.addGestureRecognizer(swipeToShare)
         
         //set up draw toolbar
         drawToolbar = UIView(frame: CGRectMake(0, view.bounds.height, view.bounds.width, view.bounds.height/6))
@@ -172,8 +184,8 @@ class DrawViewController: UIViewController {
         widthSlider = UISlider(frame: CGRectMake(widthLabel.frame.maxX + sliderSpace, 0, sliderWidth, sliderHeight))
         heightSlider.center.y = heightLabel.center.y
         widthSlider.center.y = widthLabel.center.y
-        heightSlider.minimumValue = 1
-        widthSlider.minimumValue = 1
+        heightSlider.minimumValue = Float(cornerSize*4 + cornerButtonSpace*2)
+        widthSlider.minimumValue = Float(cornerSize*4 + cornerButtonSpace*2)
         heightSlider.maximumValue = 200
         widthSlider.maximumValue = 200
         heightSlider.value = Float(height)
@@ -269,7 +281,7 @@ class DrawViewController: UIViewController {
         
         //set up corners: set color, add pan feature, count = 11
         for i in 0...10 {
-            let corner = UIImageView(frame: CGRectMake(0, 0, 17, 17))
+            let corner = UIImageView(frame: CGRectMake(0, 0, cornerSize, cornerSize))
             corner.backgroundColor = colorGreyLight
             corners.append(corner)
             corner.tag = i
@@ -321,8 +333,8 @@ class DrawViewController: UIViewController {
                 let type = ["rectangle", "circle", "triangle"]
                 i = Int(arc4random_uniform(UInt32(type.count)))
                 shapeType = type[i]
-                width = Int(arc4random_uniform(UInt32(widthSlider.maximumValue)) + 1)
-                height = Int(arc4random_uniform(UInt32(heightSlider.maximumValue)) + 1)
+                width = Int(arc4random_uniform(UInt32(widthSlider.maximumValue - widthSlider.minimumValue) - 1) + UInt32(widthSlider.minimumValue))
+                height = Int(arc4random_uniform(UInt32(heightSlider.maximumValue - heightSlider.minimumValue) - 1) + UInt32(heightSlider.minimumValue))
             }
             
             //create shape
@@ -370,8 +382,18 @@ class DrawViewController: UIViewController {
                 shapeView.backgroundColor = shapeColor
                 
                 //add gesture recognizers
+                let swipeUp = UISwipeGestureRecognizer(target: self, action: "presentToolbar:")
+                swipeUp.direction = .Up
+                
+                let swipeDown = UISwipeGestureRecognizer(target: self, action: "dismissToolbar")
+                swipeDown.direction = .Down
+                shapeView.addGestureRecognizer(swipeUp)
+                shapeView.addGestureRecognizer(swipeDown)
+                
                 let tap = UITapGestureRecognizer(target: self, action: "tapShape:")
                 let pan = UIPanGestureRecognizer(target: self, action: "moveShape:")
+                pan.requireGestureRecognizerToFail(swipeUp)
+                pan.requireGestureRecognizerToFail(swipeDown)
                 shapeView.addGestureRecognizer(tap)
                 shapeView.addGestureRecognizer(pan)
                 
@@ -466,43 +488,67 @@ class DrawViewController: UIViewController {
         //resize shape
         let trans = sender.translationInView(canvas)
         if let shape = selectedShape{
+            let widthMinValue = CGFloat(widthSlider.minimumValue)
+            let heightMinValue = CGFloat(heightSlider.minimumValue)
             switch corner.tag{
             case 0: //works, combine 7 & 1
-                corner.center.x = corner.center.x + trans.x
-                corner.center.y = corner.center.y + trans.y
-                shape.frame.size.width = shape.frame.width - trans.x
-                shape.center.x = shape.center.x + trans.x
-                shape.frame.size.height = shape.frame.height - trans.y
-                shape.center.y = shape.center.y + trans.y
+                let newWidth = shape.frame.width - trans.x
+                let newHeight = shape.frame.height - trans.y
+                if newWidth >= widthMinValue && newHeight >= heightMinValue{
+                    corner.center = CGPoint(x: corner.center.x + trans.x, y: corner.center.y + trans.y)
+                    shape.center = CGPoint(x: shape.center.x + trans.x, y: shape.center.y + trans.y)
+                    shape.frame.size = CGSize(width: newWidth, height: newHeight)
+                }
             case 1: //works
-                corner.center.y = corner.center.y + trans.y
-                shape.frame.size.height = shape.frame.height - trans.y
-                shape.center.y = shape.center.y + trans.y
+                let newHeight = shape.frame.height - trans.y
+                if newHeight >= heightMinValue{
+                    corner.center.y = corner.center.y + trans.y
+                    shape.frame.size.height = newHeight
+                    shape.center.y = shape.center.y + trans.y
+                }
             case 2: //works, combine 1 & 3
-                corner.center.x = corner.center.x + trans.x
-                corner.center.y = corner.center.y + trans.y
-                shape.frame.size.width = shape.frame.width + trans.x
-                shape.frame.size.height = shape.frame.height - trans.y
-                shape.center.y = shape.center.y + trans.y
+                let newWidth = shape.frame.width + trans.x
+                let newHeight = shape.frame.height - trans.y
+                if newWidth >= widthMinValue && newHeight >= heightMinValue{
+                    corner.center = CGPoint(x: corner.center.x + trans.x, y: corner.center.y + trans.y)
+                    shape.frame.size = CGSize(width: newWidth, height: newHeight)
+                    shape.center.y = shape.center.y + trans.y
+                }
             case 3: //works
-                corner.center.x = corner.center.x + trans.x
-                shape.frame.size.width = shape.frame.width + trans.x
+                let newWidth = shape.frame.width + trans.x
+                if newWidth >= widthMinValue{
+                    corner.center.x = corner.center.x + trans.x
+                    shape.frame.size.width = newWidth
+                }
             case 4: //works, combine 5 & 3
-                corner.center = CGPoint(x: corner.center.x + trans.x, y: corner.center.y + trans.y)
-                shape.frame.size = CGSize(width: shape.frame.width + trans.x , height: shape.frame.height + trans.y)
+                let newWidth = shape.frame.width + trans.x
+                let newHeight = shape.frame.height + trans.y
+                if newWidth >= widthMinValue && newHeight >= heightMinValue{
+                    corner.center = CGPoint(x: corner.center.x + trans.x, y: corner.center.y + trans.y)
+                    shape.frame.size = CGSize(width: newWidth, height: newHeight)
+                }
             case 5: //works
-                corner.center.y = corner.center.y + trans.y
-                shape.frame.size.height = shape.frame.height + trans.y
+                let newHeight = shape.frame.height + trans.y
+                if newHeight >= heightMinValue{
+                    corner.center.y = corner.center.y + trans.y
+                    shape.frame.size.height = newHeight
+                }
             case 6: //works, combine 7 & 5
-                corner.center.x = corner.center.x + trans.x
-                corner.center.y = corner.center.y + trans.y
-                shape.frame.size.width = shape.frame.width - trans.x
-                shape.frame.size.height = shape.frame.height + trans.y
-                shape.center.x = shape.center.x + trans.x
+                let newWidth = shape.frame.width - trans.x
+                let newHeight = shape.frame.height + trans.y
+                if newWidth >= widthMinValue && newHeight >= heightMinValue{
+                    corner.center = CGPoint(x: corner.center.x + trans.x, y: corner.center.y + trans.y)
+                    shape.frame.size = CGSize(width: newWidth, height: newHeight)
+                    shape.center.x = shape.center.x + trans.x
+
+                }
             case 7: //works
-                corner.center.x = corner.center.x + trans.x
-                shape.frame.size.width = shape.frame.width - trans.x
-                shape.center.x = shape.center.x + trans.x
+                let newWidth = shape.frame.width - trans.x
+                if newWidth >= widthMinValue{
+                    corner.center.x = corner.center.x + trans.x
+                    shape.frame.size.width = newWidth
+                    shape.center.x = shape.center.x + trans.x
+                }
             default:
                 corner.center = CGPoint(x: corner.center.x + trans.x, y: corner.center.y + trans.y)
                 shape.center = CGPoint(x: shape.center.x + trans.x, y: shape.center.y + trans.y)
@@ -574,9 +620,9 @@ class DrawViewController: UIViewController {
         
         //place the move forward/backward corners
         corners[9].center = selectedShape.center
-        corners[9].center.x = corners[9].center.x - 10 - corners[9].bounds.width/2 - corners[8].bounds.width/2
+        corners[9].center.x = corners[9].center.x - cornerButtonSpace - corners[9].bounds.width/2 - corners[8].bounds.width/2
         corners[10].center = selectedShape.center
-        corners[10].center.x = corners[10].center.x + 10 + corners[9].bounds.width/2 + corners[8].bounds.width/2
+        corners[10].center.x = corners[10].center.x + cornerButtonSpace + corners[9].bounds.width/2 + corners[8].bounds.width/2
         
         return corners
     }
@@ -601,19 +647,24 @@ class DrawViewController: UIViewController {
     }
     
     //Toolbar functions
-    func share(sender: UIButton){
+    func share(){
         //dismiss toolbar if on
         dismissToolbar()
         deselectShape()
+        shareButton.hidden = true
         
         //generate snapshot
         let window: UIWindow! = UIApplication.sharedApplication().keyWindow
         let windowImage = capture(window)
         
+        //unhide "C" button
+        shareButton.hidden = false
+        
         //transition to ShareViewController
         let shareVC = ShareViewController()
         shareVC.drawVC = self
         shareVC.masterpiece = windowImage
+        shareVC.transitioningDelegate  = self.shareTransitionManager
         presentViewController(shareVC, animated: true, completion: nil)
     }
     
@@ -640,6 +691,8 @@ class DrawViewController: UIViewController {
                 UIApplication.sharedApplication().sendAction(hideBarButton.action, to: hideBarButton.target, from: self, forEvent: nil)
             }
             deselectShape()
+            shareButton.hidden = true
+            
             //draw mode stuff
             drawBarButton.tintColor = colorGreyLight
             toolbarExpanded = true
@@ -648,6 +701,9 @@ class DrawViewController: UIViewController {
                 self.toolbar.center.y = self.drawToolbar.center.y - self.drawToolbar.bounds.height/2 - self.toolbar.bounds.height/2
             })
         } else{
+            //unhide sharebutton
+            shareButton.hidden = false
+            
             drawBarButton.tintColor = colorGreyDark
             toolbarExpanded = false
             UIView.animateWithDuration(0.5, animations: {
@@ -699,6 +755,7 @@ class DrawViewController: UIViewController {
             if hiddenMode{
                 UIApplication.sharedApplication().sendAction(hideBarButton.action, to: hideBarButton.target, from: self, forEvent: nil)
             }
+            shareButton.hidden = true
             
             //edit mode stuff
             colorBarButton.tintColor = colorGreyLight
@@ -708,6 +765,9 @@ class DrawViewController: UIViewController {
                 self.toolbar.center.y = self.colorToolbar.center.y - self.colorToolbar.bounds.height/2 - self.toolbar.bounds.height/2
             })
         } else{
+            //unhide share button
+            shareButton.hidden = false
+            
             colorBarButton.tintColor = shapeColor
             toolbarExpanded = false
             UIView.animateWithDuration(0.5, animations: {
@@ -769,11 +829,15 @@ class DrawViewController: UIViewController {
                 UIApplication.sharedApplication().sendAction(hideBarButton.action, to: hideBarButton.target, from: self, forEvent: nil)
             }
             deselectShape()
+            shareButton.hidden = true
             
             //erase stuff
             eraseBarButton.tintColor = colorGreyLight
         }else{ //eraseMode off
             eraseBarButton.tintColor = colorGreyDark
+            
+            //unhide share button
+            shareButton.hidden = false
         }
     }
     
@@ -789,6 +853,7 @@ class DrawViewController: UIViewController {
                 UIApplication.sharedApplication().sendAction(eraseBarButton.action, to: eraseBarButton.target, from: self, forEvent: nil)
             }
             deselectShape()
+            shareButton.hidden = true
             
             //hidden mode stuff
             for rect in shapesOnCanvas{
@@ -796,6 +861,12 @@ class DrawViewController: UIViewController {
             }
             hideBarButton.tintColor = colorGreyLight
         }else{
+            //unhide share button only if draw mode is not on
+            if !drawMode{
+                shareButton.hidden = false
+
+            }
+            
             for rect in shapesOnCanvas{
                 rect.alpha = 1
             }

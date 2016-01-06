@@ -22,10 +22,7 @@
 		DD981F061C206D1100511055 /* Bavro-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = DD981F051C206D1100511055 /* Bavro-Regular.otf */; };
 		DD981F081C206D1900511055 /* Infinity.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD981F071C206D1900511055 /* Infinity.ttf */; };
 		DD981F201C206ECB00511055 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD981F1B1C206ECB00511055 /* Main.storyboard */; };
-		DD981F211C206ECB00511055 /* RandomBackgroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD981F1C1C206ECB00511055 /* RandomBackgroundViewController.swift */; };
-		DD981F221C206ECB00511055 /* ShapeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD981F1D1C206ECB00511055 /* ShapeViewController.swift */; };
 		DD981F231C206ECB00511055 /* TriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD981F1E1C206ECB00511055 /* TriangleView.swift */; };
-		DD981F241C206ECB00511055 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD981F1F1C206ECB00511055 /* ViewController.swift */; };
 		DDC03F3A1C33C74F00263999 /* OvalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDC03F391C33C74F00263999 /* OvalView.swift */; };
 		DDC695071C3B132400CC5342 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDC695061C3B132400CC5342 /* Social.framework */; };
 /* End PBXBuildFile section */
@@ -69,10 +66,7 @@
 		DD981F051C206D1100511055 /* Bavro-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Bavro-Regular.otf"; path = "Media/Font/Bavro/OTF/Bavro-Regular.otf"; sourceTree = "<group>"; };
 		DD981F071C206D1900511055 /* Infinity.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Infinity.ttf; path = Media/Font/Infinity/Infinity.ttf; sourceTree = "<group>"; };
 		DD981F1B1C206ECB00511055 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		DD981F1C1C206ECB00511055 /* RandomBackgroundViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomBackgroundViewController.swift; sourceTree = "<group>"; };
-		DD981F1D1C206ECB00511055 /* ShapeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeViewController.swift; sourceTree = "<group>"; };
 		DD981F1E1C206ECB00511055 /* TriangleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriangleView.swift; sourceTree = "<group>"; };
-		DD981F1F1C206ECB00511055 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		DDC03F391C33C74F00263999 /* OvalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OvalView.swift; sourceTree = "<group>"; };
 		DDC695061C3B132400CC5342 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -133,11 +127,8 @@
 				DD27B22A1C2115240094E219 /* DrawViewController.swift */,
 				DD063CD71C3B7589004A7A43 /* ShareTransitionManager.swift */,
 				DD063CD51C3B715C004A7A43 /* ShareViewController.swift */,
-				DD981F1C1C206ECB00511055 /* RandomBackgroundViewController.swift */,
-				DD981F1D1C206ECB00511055 /* ShapeViewController.swift */,
 				DD981F1E1C206ECB00511055 /* TriangleView.swift */,
 				DDC03F391C33C74F00263999 /* OvalView.swift */,
-				DD981F1F1C206ECB00511055 /* ViewController.swift */,
 				DD981ED21C206CE700511055 /* AppDelegate.swift */,
 				DD981ED91C206CE700511055 /* Assets.xcassets */,
 				DD981EDB1C206CE700511055 /* LaunchScreen.storyboard */,
@@ -315,15 +306,12 @@
 			files = (
 				DD27B22B1C2115240094E219 /* DrawViewController.swift in Sources */,
 				DD063CD81C3B7589004A7A43 /* ShareTransitionManager.swift in Sources */,
-				DD981F241C206ECB00511055 /* ViewController.swift in Sources */,
 				DD063CD61C3B715C004A7A43 /* ShareViewController.swift in Sources */,
 				DDC03F3A1C33C74F00263999 /* OvalView.swift in Sources */,
 				DD7FDFF51C20DB5200F0AEFD /* StartViewController.swift in Sources */,
 				DD981ED31C206CE700511055 /* AppDelegate.swift in Sources */,
-				DD981F221C206ECB00511055 /* ShapeViewController.swift in Sources */,
 				DD981F231C206ECB00511055 /* TriangleView.swift in Sources */,
 				DD70CC9C1C20B53E00736426 /* ColorSlider.swift in Sources */,
-				DD981F211C206ECB00511055 /* RandomBackgroundViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

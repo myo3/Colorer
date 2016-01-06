@@ -38,11 +38,14 @@ class ShareViewController: UIViewController {
         
         //create return button
         let buttonSize = ((view.bounds.height - preview.frame.maxY) - space*3)/2
-        
-        let returnButton = UIButton(frame: CGRectMake(0, 0, buttonSize, buttonSize))
+        let returnButton = UIButton(frame: CGRectMake(0, 0, buttonSize, buttonSize + 2*space))
         returnButton.setImage(UIImage(named: "returnIcon"), forState: .Normal)
-        returnButton.center = CGPoint(x: view.bounds.width/2, y: view.bounds.height - returnButton.bounds.height/2 - space)
-        returnButton.addTarget(self, action: "returnDown:", forControlEvents: .TouchUpInside)
+        returnButton.contentMode = .ScaleAspectFit
+        returnButton.center = CGPoint(x: view.bounds.width/2, y: view.bounds.height - returnButton.bounds.width/2 - space)
+        returnButton.addTarget(self, action: "returnDown", forControlEvents: .TouchUpInside)
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: "returnDown")
+        swipeUp.direction = .Up
+        returnButton.addGestureRecognizer(swipeUp)
         self.view.addSubview(returnButton)
         
         //create save button
@@ -96,7 +99,7 @@ class ShareViewController: UIViewController {
         sender.enabled = true
     }
     
-    func returnDown(sender: UIButton){
+    func returnDown(){
         dismissViewControllerAnimated(true, completion: nil)
     }
 

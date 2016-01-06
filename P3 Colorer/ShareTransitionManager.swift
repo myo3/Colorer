@@ -9,7 +9,7 @@
 import UIKit
 
 class ShareTransitionManager: NSObject, UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate {
-    var duration = 0.5
+    var duration = 1.0
     var isPresenting = false
     
     var snapshot:UIView?
@@ -26,7 +26,7 @@ class ShareTransitionManager: NSObject, UIViewControllerAnimatedTransitioning, U
         
         // Set up the transform for sliding
         let container = transitionContext.containerView()
-        let moveDown = CGAffineTransformMakeTranslation(0, container!.frame.height - 150)
+        let moveDown = CGAffineTransformMakeTranslation(0, container!.frame.height)
         let moveUp = CGAffineTransformMakeTranslation(0, -50)
         
         // Add both views to the container view

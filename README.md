@@ -10,7 +10,7 @@ Hide or delete shapes | Share masterpiece
 --- | --- 
 ![Hide or delete shapes](Media/Example Gifs/hideOrDeleteShapes.gif) | ![Save masterpiece on phone or share to Facebook or Twitter](Media/Example Gifs/shareMasterpiece.gif)
 
-**Dismiss toolbar**
+**Toolbar**
 
 Swipe down to dismiss toolbar | Swipe up to raise toolbar
 --- | --- 

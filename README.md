@@ -1,9 +1,9 @@
 # P3-Colorer
 CUAppDev Training Program Project #3 Fall 2015
 
-Add shapes:
 
-[](Media/Example Gifs/addShapes.gif)
+
+![Add shapes](Media/Example Gifs/addShapes.gif)
 
 [Change color](Media/Example Gifs/changeColor.gif)
 

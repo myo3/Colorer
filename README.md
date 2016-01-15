@@ -19,8 +19,8 @@ Hide or delete masterpiece | Share masterpiece
 ![Hide or delete shapes](Media/Example Gifs/hideOrDeleteShapes.gif) | ![Save masterpiece on phone or share to Facebook or Twitter](Media/Example Gifs/shareMasterpiece.gif)
 
 **Toolbar**
-- Swipe down to dismiss toolbar
-- Swipe up to raise toolbar
+- Swipe down on blank canvas to dismiss toolbar
+- Swipe up on blank canvas to raise toolbar
 
 Color mode | Draw mode
 --- | --- 

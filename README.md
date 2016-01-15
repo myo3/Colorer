@@ -11,8 +11,8 @@ Move shape | Resize shape | Rotate shape
 ![Add shapes](Media/Example Gifs/moveShape.gif) | ![Change color](Media/Example Gifs/resizeShape.gif) | ![Erase shapes](Media/Example Gifs/rotateShape.gif)
 
 Layer shape |
----
-![Add shapes](Media/Example Gifs/layerShapes.gif)
+--- |
+![Add shapes](Media/Example Gifs/layerShapes.gif) |
 
 Hide or delete masterpiece | Share masterpiece
 --- | --- 

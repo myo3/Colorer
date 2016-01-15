@@ -21,7 +21,7 @@ Hide or delete masterpiece | Share masterpiece
 **Toolbar**
 - Swipe down to dismiss toolbar
 - Swipe up to raise toolbar
-- 
+
 Color mode | Draw mode
 --- | --- 
 ![Dimiss and raise toolbar in color mode](Media/Example Gifs/dimissToolbar(Color).gif) | ![Dimiss and raise toolbar in draw mode](Media/Example Gifs/dismissToolbar(Draw).gif)

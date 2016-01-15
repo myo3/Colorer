@@ -381,19 +381,9 @@ class DrawViewController: UIViewController {
                 //set shape color
                 shapeView.backgroundColor = shapeColor
                 
-                //add gesture recognizers
-                let swipeUp = UISwipeGestureRecognizer(target: self, action: "presentToolbar:")
-                swipeUp.direction = .Up
-                
-                let swipeDown = UISwipeGestureRecognizer(target: self, action: "dismissToolbar")
-                swipeDown.direction = .Down
-                shapeView.addGestureRecognizer(swipeUp)
-                shapeView.addGestureRecognizer(swipeDown)
-                
+                //add gesture recognizers                
                 let tap = UITapGestureRecognizer(target: self, action: "tapShape:")
                 let pan = UIPanGestureRecognizer(target: self, action: "moveShape:")
-                pan.requireGestureRecognizerToFail(swipeUp)
-                pan.requireGestureRecognizerToFail(swipeDown)
                 shapeView.addGestureRecognizer(tap)
                 shapeView.addGestureRecognizer(pan)
                 

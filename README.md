@@ -1,7 +1,10 @@
-# P3-Colorer
-CUAppDev Training Program Project #3 Fall 2015
+# Colorer
+>###*CUAppDev Training Program Project #3 Fall 2015*
 
+## Description
+A revamped version of the *CUAppDev Training Program Project #3*, *Colorer* provides an artsy interface to serve as inspriation for users to make their geometric masterpiece!
 
+## Features
 Add shapes | Change color | Erase shapes
 --- | --- | ---
 ![Add shapes](Media/Example Gifs/addShapes.gif) | ![Change color](Media/Example Gifs/changeColor.gif) | ![Erase shapes](Media/Example Gifs/eraseShapes.gif)
@@ -18,9 +21,9 @@ Hide or delete masterpiece | Share masterpiece
 --- | --- 
 ![Hide or delete shapes](Media/Example Gifs/hideOrDeleteShapes.gif) | ![Save masterpiece on phone or share to Facebook or Twitter](Media/Example Gifs/shareMasterpiece.gif)
 
-**Toolbar**
-- Swipe down on blank canvas to dismiss toolbar
-- Swipe up on blank canvas to raise toolbar
+> ### Toolbar Features
+> - Swipe down on blank canvas to dismiss toolbar
+> - Swipe up on blank canvas to raise toolbar
 
 Color mode | Draw mode
 --- | --- 
